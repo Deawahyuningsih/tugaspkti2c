@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    
+        <!-- FA CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css" rel="stylesheet">
+    
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="img/favicon.png" type="image/png">
+        
+        <!-- font-awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="css/style.css">
+
+        <!-- WOW CSS -->
+        <link rel="stylesheet" href="css/animate.css">
+            
+        <!-- Title of Page -->
+        <title>VB's Marketplace</title>
+    </head>
+    
+    <body>
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-color: rgba(255, 255, 255, 0.47) !important;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="img/logo.png" width="180" background= "white" text-indent= "-99999px" style="margin-left: 5%;">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-active" href="#">ABOUT</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#products">PRODUCTS</a>
+                        </li> 
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#blog">BLOG</a>
+                        </li> 
+
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="">CONTACT</a>
+                        </li> 
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- Big Header Image -->
+        <!-- 
+            Instructions for changing header image:
+            If you want to use an online image link, follow these steps:
+            - The line below <div class="hero-image" style="background-image... has the image url inside [background image: url('your image link')...] 
+            - Simply change the existing link with your_image_link (Make sure you don't miss out the single quotes). 
+            - E.g.: <div class="hero-image" style="background-image: url('https://s14.postimg.cc/5i4g1gqwh/Untitled-1.jpg');">
+
+            If you want to upload an image instead of a link, follow these steps:
+            - Upload your image to 'img' folder inside main folder (public_html with web icon)
+            - Now, add the url of image this way: background-image: url('img/image_name.extension')
+            - Make sure to add image name correctly and also add the extension(.png, .jpg, etc.).
+            - E.g.: <div class="hero-image" style="background-image: url('img/logo.png');">
+        -->
+        
+        <div class="hero-image" style="background-image: url('https://asset.kompas.com/crops/Aj9W3z-GeYR-ArwDVeBnrQstjOU=/0x0:1000x667/1200x800/data/photo/2021/06/24/60d43f87650f6.jpg');">
+            <div class="hero-text">
+                <h1 class="wow fadeInLeft" style="font-style: Georgia; color: #fff; font-size:50px;">
+                    Welcome to Foodaily Marketplace!
+                </h1>
+                <p class="hero-p">
+                  Everything food
+                </p>
+                <a href="#products">
+                    <button class="wow fadeIn">Keep Scrolling</button>
+                </a>
+            </div>            
+        </div>
+
+
+        <!-- Products -->
+        <div class="container" id="products" style="margin-top: 8%;">
+            <h2 style="font-size: 2.5rem !important;">PRODUCTS</h2>
+            <div class="row">
+                <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInLeft">
+                    <div class="card card-product">
+                        <img class="card-img-top" src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" alt="food product">              
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInRight">
+                    <div class="card card-product">
+                        <img class="card-img-top" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80" alt="food product">              
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInLeft">
+                    <div class="card card-product">
+                        <img class="card-img-top" src="https://images.unsplash.com/photo-1467453678174-768ec283a940?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=728&q=80" alt="food product">              
+                    </div>
+                </div>
+                
+                <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInRight">
+                    <div class="card card-product">
+                        <img class="card-img-top" src="https://images.unsplash.com/photo-1534080564583-6be75777b70a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" alt="food product">              
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInLeft">
+                    <div class="card card-product">
+                        <img class="card-img-top" src="https://images.unsplash.com/photo-1592161125047-58feeba8de3c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" alt="food product">              
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInRight">
+                    <div class="card card-product">
+                        <img class="card-img-top" src="https://images.unsplash.com/photo-1559329374-a792174e7a1e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" alt="food product">              
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInLeft">
+                    <div class="card card-product">
+                        <img class="card-img-top" src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80" alt="food product">              
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInRight">
+                    <div class="card card-product">
+                        <img class="card-img-top" src="https://images.unsplash.com/photo-1513185158878-8d8c2a2a3da3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80" alt="food product">              
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInLeft">
+                    <div class="card card-product">
+                        <img class="card-img-top" src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" alt="food product">              
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Blog -->
+        <div class="container" id="blog" style="margin-top: 8%;">
+            <h2 style="font-size: 2.5rem !important;">Foodaily Menu</h2>
+            <div class="row">
+              <div class="col-12 col-sm-8 col-md-6 col-lg-4 wow fadeIn">
+                <div class="card">
+                  <img class="card-img" src="https://images.unsplash.com/photo-1542116021-0ff087fb0a41?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1504&q=80" alt="food blog">
+                  <div class="card-body">
+                    <h4 class="card-title">Jus Stoberi</h4>                    
+                    <a class="btn btn-info">Rp.14.000</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-8 col-md-6 col-lg-4 wow fadeIn">
+                <div class="card">
+                  <img class="card-img" src="https://images.unsplash.com/photo-1506919638378-07c16afcd6f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" alt="food blog">
+                  <div class="card-body">
+                    <h4 class="card-title">Spaghetti</h4>                    
+                    <a class="btn btn-info">Rp.50.000</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-8 col-md-6 col-lg-4 wow fadeIn">
+                <div class="card">
+                  <img class="card-img" src="https://cove-blog-id.sgp1.cdn.digitaloceanspaces.com/cove-blog-id/2024/07/mie-ayam-bandung.jpg" alt="food blog">
+                  <div class="card-body">
+                    <h4 class="card-title">Mie Ayam</h4>                    
+                    <a class="btn btn-info">Rp15.000</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-8 col-md-6 col-lg-4 wow fadeIn">
+                <div class="card">
+                  <img class="card-img" src="https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/p2/255/2024/11/14/IMG_4814-81774369.jpeg" alt="food blog">
+                  <div class="card-body">
+                    <h4 class="card-title">Dimsum</h4>                    
+                    <a class="btn btn-info">Rp. 20.000</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-8 col-md-6 col-lg-4 wow fadeIn">
+                <div class="card">
+                  <img class="card-img" src="https://www.astronauts.id/blog/wp-content/uploads/2023/03/Daftar-Resep-Es-Buah-yang-Mudah-dan-Enak-1024x683.jpg" alt="food blog">
+                  <div class="card-body">
+                    <h4 class="card-title">Es Buah</h4>                    
+                    <a class="btn btn-info">Rp 15.000</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-8 col-md-6 col-lg-4 wow fadeIn">
+                <div class="card">
+                  <img class="card-img" src="https://images.unsplash.com/photo-1614874044863-95c6cc6b6cf3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjR8fGZvb2QlMjBhbmQlMjBkcmlua3xlbnwwfDB8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="food blog">
+                  <div class="card-body">
+                    <h4 class="card-title">Lorel Ipsum</h4>                    
+                    <a class="btn btn-info">Read More</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-8 col-md-6 col-lg-4 wow fadeIn">
+                <div class="card">
+                  <img class="card-img" src="https://images.unsplash.com/photo-1612539466296-4ecf1db303e3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=813&q=80" alt="food blog">
+                  <div class="card-body">
+                    <h4 class="card-title">Lorel Ipsum</h4>                    
+                    <a class="btn btn-info">Read More</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-8 col-md-6 col-lg-4 wow fadeIn">
+                <div class="card">
+                  <img class="card-img" src="https://images.unsplash.com/photo-1616895428703-598b1d6fe4f7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" alt="food blog">
+                  <div class="card-body">
+                    <h4 class="card-title">Lorel Ipsum</h4>                    
+                    <a class="btn btn-info">Read More</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 footer-left">
+                        <p>
+                            <img src="img/favicon.png" style="width: 65px;">  
+                            <span style="color: #573f70; font-weight: 600;">
+                                <a class="footer-link" href="termsandconditions.html">
+                                    T&C
+                                </a>
+                            </span>
+                        </p>        
+                    </div>
+                    <div class="col-md-3 offset-md-1 footer-right">
+                        <a class="footer-link" href="privacypolicy.html">Privacy Policy</a><br>
+                        <a class="footer-link" href="cookiespolicy.html">Cookies Policy</a><br>
+                        <a class="footer-link" href="userpolicy.html">User Policy</a><br>
+                    </div>
+                </div>
+            </div>
+        </footer>
+  
+
+        <!-- Scroll to top arrow -->
+        <a href="javascript:" id="return-to-top"><i class="fa fa-angle-up" aria-hidden="true" style="font-size: 30px;"></i></a>
+
+        <!-- JQuery JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous"></script>
+        
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+        
+        <!-- Custom scripts -->    
+        <script type="text/javascript" src="js/script.js"></script>
+
+        <!-- WOW animations -->
+        <script type="text/javascript" src="js/wow.min.js"></script>
+
+        <script type="text/javascript">
+            new WOW().init();
+        </script>
+
+        <!-- Chat Bot -->
+        <script>  
+          var MessageBirdChatWidgetSettings = {     widgetId: '76e5a100-c908-4062-a893-bf2f9b3389f3',     initializeOnLoad: true,   };  !function(){"use strict";if(Boolean(document.getElementById("live-chat-widget-script")))console.error("MessageBirdChatWidget: Snippet loaded twice on page");else{var e,t;window.MessageBirdChatWidget={},window.MessageBirdChatWidget.queue=[];for(var i=["init","setConfig","toggleChat","identify","hide","on","shutdown"],n=function(){var e=i[d];window.MessageBirdChatWidget[e]=function(){for(var t=arguments.length,i=new Array(t),n=0;n<t;n++)i[n]=arguments[n];window.MessageBirdChatWidget.queue.push([[e,i]])}},d=0;d<i.length;d++)n();var a=(null===(e=window)||void 0===e||null===(t=e.MessageBirdChatWidgetSettings)||void 0===t?void 0:t.widgetId)||"",o=function(){var e,t=document.createElement("script");t.type="text/javascript",t.src="https://livechat.messagebird.com/bootstrap.js?widgetId=".concat(a),t.async=!0,t.id="live-chat-widget-script";var i=document.getElementsByTagName("script")[0];null==i||null===(e=i.parentNode)||void 0===e||e.insertBefore(t,i)};"complete"===document.readyState?o():window.attachEvent?window.attachEvent("onload",o):window.addEventListener("load",o,!1)}}();
+        </script>
+
+    </body>
+</html>
