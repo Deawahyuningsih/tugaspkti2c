@@ -58,6 +58,23 @@
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#blog">MENU</a>
                         </li> 
+                        <script>
+    let cart = [];
+
+    // Fungsi untuk menambahkan item ke keranjang
+    function addToCart(item) {
+        cart.push(item);
+        alert(item + " telah ditambahkan ke keranjang!");
+    }
+
+    // Event listener untuk tombol "Tambah ke Keranjang"
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function() {
+            const itemName = this.getAttribute('data-name');
+            addToCart(itemName);
+        });
+    });
+</script>
 
                         <li class="nav-item">
                             
