@@ -1,31 +1,31 @@
 const members = [
   {
-    name: "Dea Wahyuningsih",
-    img: "img/img1.jpg",
-    npm: "10224485",
-    hobby: "Eksplor makanan",
-    interest: "Bisnis",
-  },
-  {
-    name: "Annisa Tya Ramadhanty",
-    img: "img/img2.jpg",
-    npm: "10224265",
-    hobby: "Nyanyi",
-    interest: "Kerja di dunia perfilman",
-  },
-  {
     name: "Vina Suci Ramadhani",
-    img: "img/img3.jpg",
+    img: "img/img1.jpg",
     npm: "12224110",
     hobby: "Masak, Design",
     interest: "Agency",
   },
   {
+    name: "Dea Wahyuningsih",
+    img: "img/img2.jpg",
+    npm: "10224485",
+    hobby: "Eksplor Makanan",
+    interest: "Bisnis",
+  },
+  {
     name: "Qeisya Shaina Qahar",
-    img: "img/img4.jpg",
+    img: "img/img3.jpg",
     npm: "11224631",
     hobby: "Makeup",
-    interest: "Bisnis",
+    interest: "Bisnis MUA",
+  },
+  {
+    name: "Annisa Tya Ramadhanty",
+    img: "img/img4.jpg",
+    npm: "10224265",
+    hobby: "Nyanyi",
+    interest: "Bekerja didunia per-Filman",
   },
 ];
 
