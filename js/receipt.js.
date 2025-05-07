@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Bukti Transaksi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+
+    .receipt-container {
+      max-width: 400px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    p {
+      font-size: 16px;
+      margin: 6px 0;
+    }
+
+    .total {
+      font-weight: bold;
+      color: green;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+      text-align: center;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="receipt-container" id="receipt">
+    <!-- Bukti transaksi akan muncul di sini -->
+  </div>
+
+  <script>
+    function generateReceipt(transaction) {
+      const receiptContainer = document.getElementById('receipt');
+      receiptContainer.innerHTML = `
+        <h2>Bukti Transaksi</h2>
+        <p><strong>ID Transaksi:</strong> ${transaction.id}</p>
+        <p><strong>Tanggal:</strong> ${transaction.date}</p>
+        <p><strong>Nama Pelanggan:</strong> ${transaction.customer}</p>
+        <p class="total"><strong>Total Pembayaran:</strong> Rp ${transaction.total.toLocaleString('id-ID')}</p>
+        <div class="footer">Terima kasih telah bertransaksi!</div>
+      `;
+    }
+
+    // Data contoh transaksi
+    const sampleTransaction = {
+      id: 'TRX20250507',
+      date: '07 Mei 2025',
+      customer: 'Budi Santoso',
+      total: 250000
+    };
+
+    // Menampilkan bukti transaksi
+    generateReceipt(sampleTransaction);
+  </script>
+
+</body>
+</html>
