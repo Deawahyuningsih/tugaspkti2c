@@ -1,10 +1,9 @@
-// DATA MENU
 const dataMenu = {
   menu1: {
     kasir: 'Dea',
     waktu: '2025-05-07 14:32',
     items: [
-      { nama: 'mie ayam', qty: 1, subtotal: '15.000' }
+      { nama: 'Es Buah', qty: 1, subtotal: '15.000' }
     ],
     total: '15.000'
   },
@@ -13,13 +12,12 @@ const dataMenu = {
     waktu: '2025-05-07 14:33',
     items: [
       { nama: 'mie ayam', qty: 1, subtotal: '15.000' },
-      { nama: 'jus stroberi', qty: 1, subtotal: '14.000' }
+      { nama: 'juds sroberi', qty: 1, subtotal: '14.000' }
     ],
-    total: '25.000'
+    total: '29.000'
   }
 };
 
-// FUNGSI BUAT STRUK
 function generateReceipt(transaksi) {
   let struk = 
 `=========================
@@ -42,7 +40,6 @@ Total: ${transaksi.total}
   return struk;
 }
 
-// EVENT SAAT GANTI MENU
 document.addEventListener('DOMContentLoaded', () => {
   const selector = document.getElementById('menuSelector');
   selector.addEventListener('change', () => {
@@ -51,6 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('tampilanStruk').textContent = hasilStruk;
   });
 
-  // Tampilkan default saat pertama kali halaman dibuka
+  // tampilkan pertama kali
   selector.dispatchEvent(new Event('change'));
 });
