@@ -1,3 +1,23 @@
+function generateReceipt(transaction) {
+  const receiptContainer = document.getElementById('receipt');
+  receiptContainer.innerHTML = `
+    <h2>Bukti Transaksi</h2>
+    <p><strong>ID Transaksi:</strong> ${transaction.id}</p>
+    <p><strong>Tanggal:</strong> ${transaction.date}</p>
+    <p><strong>Nama Pelanggan:</strong> ${transaction.customer}</p>
+    <p class="total"><strong>Total Pembayaran:</strong> Rp ${transaction.total.toLocaleString('id-ID')}</p>
+    <div class="footer">Terima kasih telah bertransaksi!</div>
+  `;
+}
+
+const sampleTransaction = {
+  id: 'TRX20250507',
+  date: '07 Mei 2025',
+  customer: 'Budi Santoso',
+  total: 250000
+};
+
+generateReceipt(sampleTransaction);
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -48,30 +68,7 @@
     <!-- Bukti transaksi akan muncul di sini -->
   </div>
 
-  <script>
-    function generateReceipt(transaction) {
-      const receiptContainer = document.getElementById('receipt');
-      receiptContainer.innerHTML = `
-        <h2>Bukti Transaksi</h2>
-        <p><strong>ID Transaksi:</strong> ${transaction.id}</p>
-        <p><strong>Tanggal:</strong> ${transaction.date}</p>
-        <p><strong>Nama Pelanggan:</strong> ${transaction.customer}</p>
-        <p class="total"><strong>Total Pembayaran:</strong> Rp ${transaction.total.toLocaleString('id-ID')}</p>
-        <div class="footer">Terima kasih telah bertransaksi!</div>
-      `;
-    }
-
-    // Data contoh transaksi
-    const sampleTransaction = {
-      id: 'TRX20250507',
-      date: '07 Mei 2025',
-      customer: 'Budi Santoso',
-      total: 250000
-    };
-
-    // Menampilkan bukti transaksi
-    generateReceipt(sampleTransaction);
-  </script>
-
+  <script src="js/receipt.js"></script>
 </body>
 </html>
+
