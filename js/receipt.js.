@@ -1,50 +1,40 @@
-from datetime import datetime
+function generateReceipt(transaksi) {
+    let receipt = ========================\n;
+    receipt += `        VB's           \n`;
+    receipt += `  Bukti Transaksi Kasir \n`;
+    receipt += ========================\n;
+    receipt += Kasir  : ${transaksi.nama_kasir}\n;
+    receipt += Waktu  : ${transaksi.waktu}\n;
+    receipt += ------------------------\n;
+    receipt += Barang        Qty     Subtotal\n;
 
-# Data transaksi (bisa berasal dari input atau database)
-transaksi = {
-    "nama_kasir": "Andi",
-    "waktu": datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
-    "items": [
-        {"nama": "Roti", "qty": 2, "harga": 5000},
-        {"nama": "Susu", "qty": 1, "harga": 10000},
-        {"nama": "Teh", "qty": 3, "harga": 3000},
-    ]
+    let total = 0;
+    transaksi.items.forEach(item => {
+        const subtotal = item.qty * item.harga;
+        receipt += ${item.nama.padEnd(13)} ${item.qty}x     Rp${subtotal}\n;
+        total += subtotal;
+    });
+
+    receipt += ------------------------\n;
+    receipt += TOTAL         : Rp${total}\n;
+    receipt += ========================\n;
+    receipt += `   Terima kasih atas kunjungan Anda!\n`;
+    receipt += ========================\n;
+
+    return receipt;
 }
 
-# Hitung total
-total = sum(item["qty"] * item["harga"] for item in transaksi["items"])
-
-# Cetak bukti transaksi
-print("="*30)
-print("        VB's")
-print("      Bukti Transaksi Kasir")
-print("="*30)
-print(f"Kasir  : {transaksi['dea']}")
-print(f"Waktu  : {transaksi['19.30']}")
-print("-"*30)
-print("Barang        Qty     Subtotal")
-for item in transaksi["items"]:
-    subtotal = item["qty"] * item["harga"]
-    print(f"{item['nama']:<13}{item['qty']}x     Rp{subtotal}")
-print("-"*30)
-print(f"TOTAL         : Rp{150.000}")
-print("="*30)
-print("   Terima kasih atas kunjungan Anda!")
-print("="*30)
-
-// Data contoh untuk ditampilkan sebagai struk
-const dataContoh = {
-  tanggal: "07-05-2025",
-  waktu: "19:30",
-  pengirim: "Rina",
-  bankPengirim: "BCA",
-  penerima: "Warung Makan Sederhana",
-  bankPenerima: "Mandiri",
-  noRekening: "1234567890",
-  jumlah: 34000,
-  berita: "Pembayaran makanan",
-  status: "Berhasil"
+// Data transaksi
+const transaksi = {
+    nama_kasir: "Andi",
+    waktu: new Date().toLocaleString(), // Menggunakan format waktu lokal
+    items: [
+        { nama: "Roti", qty: 2, harga: 5000 },
+        { nama: "Susu", qty: 1, harga: 10000 },
+        { nama: "Teh", qty: 3, harga: 3000 },
+    ]
 };
 
-// Panggil fungsi untuk menampilkan bukti transfer
-generateBuktiTransfer(dataContoh);
+// Menghasilkan struk
+const receipt = generateReceipt(transaksi);
+console.log(receipt);
