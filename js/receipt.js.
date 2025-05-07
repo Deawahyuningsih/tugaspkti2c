@@ -15,3 +15,45 @@ return struk; //
 
 const hasilStruk = generateReceipt(transaksi);
 document.getElementById("outputStruk").innerText = hasilStruk;
+
+const dataMenu = {
+  menu1: {
+    id: 'TRX001',
+    tanggal: '07-05-2025',
+    items: [
+      { nama: 'Nasi Goreng', jumlah: 1, harga: 20000 }
+    ],
+    total: 20000
+  },
+  menu2: {
+    id: 'TRX002',
+    tanggal: '07-05-2025',
+    items: [
+      { nama: 'Mie Ayam', jumlah: 1, harga: 18000 },
+      { nama: 'Es Teh', jumlah: 1, harga: 5000 }
+    ],
+    total: 23000
+  }
+};
+
+function perbaruiStruk(data) {
+  document.getElementById('nomorTransaksi').textContent = data.id;
+  document.getElementById('tanggalTransaksi').textContent = data.tanggal;
+
+  const daftarItem = document.getElementById('daftarItem');
+  daftarItem.innerHTML = '';
+  data.items.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = ${item.nama} x${item.jumlah} - Rp ${item.harga};
+    daftarItem.appendChild(li);
+  });
+
+  document.getElementById('totalTransaksi').textContent = data.total;
+}
+
+// Ganti struk saat menu dipilih
+document.getElementById('pilihMenu').addEventListener('change', function () {
+  const menuDipilih = this.value;
+  const data = dataMenu[menuDipilih];
+  perbaruiStruk(data);
+});
