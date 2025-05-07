@@ -488,3 +488,45 @@ Terima kasih!
   <option value="menu1">Menu 1</option>
   <option value="menu2">Menu 2</option>
 </select>
+
+const dataMenu = {
+  menu1: {
+    id: 'TRX001',
+    tanggal: '07-05-2025',
+    items: [
+      { nama: 'Es Buah', jumlah: 1, harga: 15.000}
+    ],
+    total: 15.000
+  },
+  menu2: {
+    id: 'TRX002',
+    tanggal: '07-05-2025',
+    items: [
+      { nama: 'Es Buah, jumlah: 1, harga: 15.000 },
+      { nama: 'Dimsum, jumlah: 1, harga: 20.000 }
+    ],
+    total: 35.000
+  }
+};
+
+function perbaruiStruk(data) {
+  document.getElementById('nomorTransaksi').textContent = data.id;
+  document.getElementById('tanggalTransaksi').textContent = data.tanggal;
+
+  const daftarItem = document.getElementById('daftarItem');
+  daftarItem.innerHTML = '';
+  data.items.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = ${item.nama} x${item.jumlah} - Rp ${item.harga};
+    daftarItem.appendChild(li);
+  });
+
+  document.getElementById('totalTransaksi').textContent = data.total;
+}
+
+// Ganti struk saat menu dipilih
+document.getElementById('pilihMenu').addEventListener('change', function () {
+  const menuDipilih = this.value;
+  const data = dataMenu[menuDipilih];
+  perbaruiStruk(data);
+});
