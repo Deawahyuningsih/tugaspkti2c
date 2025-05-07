@@ -16,18 +16,35 @@ total = sum(item["qty"] * item["harga"] for item in transaksi["items"])
 
 # Cetak bukti transaksi
 print("="*30)
-print("        TOKO MAJU JAYA")
+print("        VB's")
 print("      Bukti Transaksi Kasir")
 print("="*30)
-print(f"Kasir  : {transaksi['nama_kasir']}")
-print(f"Waktu  : {transaksi['waktu']}")
+print(f"Kasir  : {transaksi['dea']}")
+print(f"Waktu  : {transaksi['19.30']}")
 print("-"*30)
 print("Barang        Qty     Subtotal")
 for item in transaksi["items"]:
     subtotal = item["qty"] * item["harga"]
     print(f"{item['nama']:<13}{item['qty']}x     Rp{subtotal}")
 print("-"*30)
-print(f"TOTAL         : Rp{total}")
+print(f"TOTAL         : Rp{150.000}")
 print("="*30)
 print("   Terima kasih atas kunjungan Anda!")
 print("="*30)
+
+// Data contoh untuk ditampilkan sebagai struk
+const dataContoh = {
+  tanggal: "07-05-2025",
+  waktu: "19:30",
+  pengirim: "Rina",
+  bankPengirim: "BCA",
+  penerima: "Warung Makan Sederhana",
+  bankPenerima: "Mandiri",
+  noRekening: "1234567890",
+  jumlah: 34000,
+  berita: "Pembayaran makanan",
+  status: "Berhasil"
+};
+
+// Panggil fungsi untuk menampilkan bukti transfer
+generateBuktiTransfer(dataContoh);
