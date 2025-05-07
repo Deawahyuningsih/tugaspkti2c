@@ -49,3 +49,64 @@ Terima kasih!
 
 </body>
 </html>
+
+const dataMenu = {
+  menu1: {
+    kasir: 'Dea',
+    waktu: '2025-05-07 14:32',
+    items: [
+      { nama: 'Es Buah', qty: 1, subtotal: '15.000' }
+    ],
+    total: '15.000'
+  },
+  menu2: {
+    kasir: 'Dea',
+    waktu: '2025-05-07 14:35',
+    items: [
+      { nama: 'Nasi Goreng', qty: 1, subtotal: '20.000' },
+      { nama: 'Es Teh', qty: 1, subtotal: '5.000' }
+    ],
+    total: '25.000'
+  }
+};
+
+function generateReceipt(transaksi) {
+  let struk = 
+`=========================
+VB's
+Bukti Transaksi Kasir
+=========================
+Kasir : ${transaksi.kasir}
+Waktu : ${transaksi.waktu}
+-------------------------
+Barang         Qty  Subtotal`;
+
+  transaksi.items.forEach(item => {
+    struk += \n${item.nama.padEnd(15)} ${item.qty}   ${item.subtotal};
+  });
+
+  struk += `\n-------------------------
+Total: ${transaksi.total}
+=========================`;
+
+  return struk;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const selector = document.getElementById('menuSelector');
+  const output = document.getElementById('tampilanStruk');
+
+  if (!selector || !output) {
+    console.error('Elemen tidak ditemukan.');
+    return;
+  }
+
+  function updateReceipt() {
+    const transaksi = dataMenu[selector.value];
+    const hasilStruk = generateReceipt(transaksi);
+    output.textContent = hasilStruk;
+  }
+
+  selector.addEventListener('change', updateReceipt);
+  updateReceipt(); // Tampilkan default saat pertama kali
+});
