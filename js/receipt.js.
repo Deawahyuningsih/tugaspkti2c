@@ -1,40 +1,10 @@
 function generateReceipt(transaksi) {
-    let receipt = ========================\n;
-    receipt += `        VB's           \n`;
-    receipt += `  Bukti Transaksi Kasir \n`;
-    receipt += ========================\n;
-    receipt += Kasir  : ${transaksi.nama_kasir}\n;
-    receipt += Waktu  : ${transaksi.waktu}\n;
-    receipt += ------------------------\n;
-    receipt += Barang        Qty     Subtotal\n;
-
-    let total = 0;
-    transaksi.items.forEach(item => {
-        const subtotal = item.qty * item.harga;
-        receipt += ${item.nama.padEnd(13)} ${item.qty}x     Rp${subtotal}\n;
-        total += subtotal;
-    });
-
-    receipt += ------------------------\n;
-    receipt += TOTAL         : Rp${total}\n;
-    receipt += ========================\n;
-    receipt += `   Terima kasih atas kunjungan Anda!\n`;
-    receipt += ========================\n;
-
-    return receipt;
-}
-
-// Data transaksi
-const transaksi = {
-    nama_kasir: "Andi",
-    waktu: new Date().toLocaleString(), // Menggunakan format waktu lokal
-    items: [
-        { nama: "Es Buah", qty: 1, harga: 15.000 },
-        { nama: "Mie Ayam", qty: 1, harga: 15.000 },
-        { nama: "Dimsum", qty: 1, harga: 20,.000,
-    ]
-};
-
-// Menghasilkan struk
-const receipt = generateReceipt(transaksi);
-console.log(receipt);
+=========================
+VB's
+Bukti Transaksi Kasir
+=========================
+Kasir : [Dea]
+Waktu : [03.49]
+-------------------------
+Barang         Es Buah
+[Item Name]    [Qty] [15.000]
