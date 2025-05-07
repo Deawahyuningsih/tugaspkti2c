@@ -1,4 +1,5 @@
 function generateReceipt(transaksi) {
+let sruk =
 =========================
 VB's
 Bukti Transaksi Kasir
@@ -8,3 +9,9 @@ Waktu : [2025-05-07 14:32]
 -------------------------
 Barang         Qty Subtotal
 [Es Buah]    [1] [15.000]
+;
+
+return struk; //
+
+const hasilStruk = generateReceipt(transaksi);
+document.getElementById("outputStruk").innerText = hasilStruk;
