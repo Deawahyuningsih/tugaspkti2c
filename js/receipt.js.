@@ -4,7 +4,7 @@ const dataMenu = {
     kasir: 'Dea',
     waktu: '2025-05-07 14:32',
     items: [
-      { nama: 'Es Buah', qty: 1, subtotal: '15.000' }
+      { nama: 'mie ayam', qty: 1, subtotal: '15.000' }
     ],
     total: '15.000'
   },
@@ -12,8 +12,8 @@ const dataMenu = {
     kasir: 'Dea',
     waktu: '2025-05-07 14:33',
     items: [
-      { nama: 'Nasi Goreng', qty: 1, subtotal: '20.000' },
-      { nama: 'Teh Manis', qty: 1, subtotal: '5.000' }
+      { nama: 'mie ayam', qty: 1, subtotal: '15.000' },
+      { nama: 'jus stroberi', qty: 1, subtotal: '14.000' }
     ],
     total: '25.000'
   }
