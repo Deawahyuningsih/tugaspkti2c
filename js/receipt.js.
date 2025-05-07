@@ -1,15 +1,56 @@
+// DATA MENU
+const dataMenu = {
+  menu1: {
+    kasir: 'Dea',
+    waktu: '2025-05-07 14:32',
+    items: [
+      { nama: 'Es Buah', qty: 1, subtotal: '15.000' }
+    ],
+    total: '15.000'
+  },
+  menu2: {
+    kasir: 'Dea',
+    waktu: '2025-05-07 14:33',
+    items: [
+      { nama: 'Nasi Goreng', qty: 1, subtotal: '20.000' },
+      { nama: 'Teh Manis', qty: 1, subtotal: '5.000' }
+    ],
+    total: '25.000'
+  }
+};
+
+// FUNGSI BUAT STRUK
 function generateReceipt(transaksi) {
-let sruk =
-=========================
+  let struk = 
+`=========================
 VB's
 Bukti Transaksi Kasir
 =========================
-Kasir : [Dea]
-Waktu : [2025-05-07 14:32]
+Kasir : ${transaksi.kasir}
+Waktu : ${transaksi.waktu}
 -------------------------
-Barang         Qty Subtotal
-[Es Buah]    [1] [15.000]
-;
+Barang         Qty  Subtotal`;
 
-return struk; //
+  transaksi.items.forEach(item => {
+    struk += \n${item.nama.padEnd(15)} ${item.qty}   ${item.subtotal};
+  });
 
+  struk += `\n-------------------------
+Total: ${transaksi.total}
+=========================`;
+
+  return struk;
+}
+
+// EVENT SAAT GANTI MENU
+document.addEventListener('DOMContentLoaded', () => {
+  const selector = document.getElementById('menuSelector');
+  selector.addEventListener('change', () => {
+    const transaksi = dataMenu[selector.value];
+    const hasilStruk = generateReceipt(transaksi);
+    document.getElementById('tampilanStruk').textContent = hasilStruk;
+  });
+
+  // Tampilkan default saat pertama kali halaman dibuka
+  selector.dispatchEvent(new Event('change'));
+});
