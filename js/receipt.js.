@@ -1,33 +1,34 @@
-from datetime import datetime
-
-# Data transaksi (bisa berasal dari input atau database)
-transaksi = {
-    "nama_kasir": "Andi",
-    "waktu": datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
-    "items": [
-        {"nama": "Roti", "qty": 2, "harga": 5000},
-        {"nama": "Susu", "qty": 1, "harga": 10000},
-        {"nama": "Teh", "qty": 3, "harga": 3000},
-    ]
+// Fungsi untuk membuat bukti transfer
+function generateBuktiTransfer(data) {
+  const container = document.getElementById('receipt-container');
+  container.innerHTML = `
+    <h2>Bukti Transfer</h2>
+    <p><strong>Tanggal:</strong> ${data.tanggal}</p>
+    <p><strong>Waktu:</strong> ${data.waktu}</p>
+    <p><strong>Nama Pengirim:</strong> ${data.pengirim}</p>
+    <p><strong>Bank Pengirim:</strong> ${data.bankPengirim}</p>
+    <p><strong>Nama Penerima:</strong> ${data.penerima}</p>
+    <p><strong>Bank Penerima:</strong> ${data.bankPenerima}</p>
+    <p><strong>Nomor Rekening Penerima:</strong> ${data.noRekening}</p>
+    <p><strong>Jumlah Transfer:</strong> Rp ${data.jumlah.toLocaleString('id-ID')}</p>
+    <p><strong>Berita:</strong> ${data.berita}</p>
+    <p><strong>Status:</strong> ${data.status}</p>
+  `;
 }
 
-# Hitung total
-total = sum(item["qty"] * item["harga"] for item in transaksi["items"])
+// Contoh data transaksi
+const dataTransaksi = {
+  tanggal: '07-05-2025',
+  waktu: '14:37:33',
+  pengirim: 'Andi Saputra',
+  bankPengirim: 'Bank ABC',
+  penerima: 'Budi Santoso',
+  bankPenerima: 'Bank XYZ',
+  noRekening: '1234567890',
+  jumlah: 1500000,
+  berita: 'Pembayaran Invoice #1234',
+  status: 'Berhasil'
+};
 
-# Cetak bukti transaksi
-print("="*30)
-print("        TOKO MAJU JAYA")
-print("      Bukti Transaksi Kasir")
-print("="*30)
-print(f"Kasir  : {transaksi['nama_kasir']}")
-print(f"Waktu  : {transaksi['waktu']}")
-print("-"*30)
-print("Barang        Qty     Subtotal")
-for item in transaksi["items"]:
-    subtotal = item["qty"] * item["harga"]
-    print(f"{item['nama']:<13}{item['qty']}x     Rp{subtotal}")
-print("-"*30)
-print(f"TOTAL         : Rp{total}")
-print("="*30)
-print("   Terima kasih atas kunjungan Anda!")
-print("="*30)
+// Tampilkan bukti transfer saat halaman dimuat
+generateBuktiTransfer(dataTransaksi);
