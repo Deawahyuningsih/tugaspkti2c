@@ -29,9 +29,9 @@ const transaksi = {
     nama_kasir: "Andi",
     waktu: new Date().toLocaleString(), // Menggunakan format waktu lokal
     items: [
-        { nama: "Roti", qty: 2, harga: 5000 },
-        { nama: "Susu", qty: 1, harga: 10000 },
-        { nama: "Teh", qty: 3, harga: 3000 },
+        { nama: "Es Buah", qty: 1, harga: 15.000 },
+        { nama: "Mie Ayam", qty: 1, harga: 15.000 },
+        { nama: "Dimsum", qty: 1, harga: 20,.000,
     ]
 };
 
