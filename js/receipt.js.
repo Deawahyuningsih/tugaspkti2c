@@ -1,17 +1,33 @@
-function generateReceipt(transaction) {
-  const receiptContainer = document.getElementById('receipt');
-  receiptContainer.innerHTML = `
-    <h2>Bukti Transaksi</h2>
-    <p><strong>ID Transaksi:</strong> ${transaction.id}</p>
-    ...
-  `;
+from datetime import datetime
+
+# Data transaksi (bisa berasal dari input atau database)
+transaksi = {
+    "nama_kasir": "Andi",
+    "waktu": datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
+    "items": [
+        {"nama": "Roti", "qty": 2, "harga": 5000},
+        {"nama": "Susu", "qty": 1, "harga": 10000},
+        {"nama": "Teh", "qty": 3, "harga": 3000},
+    ]
 }
 
-const sampleTransaction = {
-  id: 'TRX20250507',
-  date: '07 Mei 2025',
-  customer: 'Budi Santoso',
-  total: 250000
-};
+# Hitung total
+total = sum(item["qty"] * item["harga"] for item in transaksi["items"])
 
-generateReceipt(sampleTransaction);
+# Cetak bukti transaksi
+print("="*30)
+print("        TOKO MAJU JAYA")
+print("      Bukti Transaksi Kasir")
+print("="*30)
+print(f"Kasir  : {transaksi['nama_kasir']}")
+print(f"Waktu  : {transaksi['waktu']}")
+print("-"*30)
+print("Barang        Qty     Subtotal")
+for item in transaksi["items"]:
+    subtotal = item["qty"] * item["harga"]
+    print(f"{item['nama']:<13}{item['qty']}x     Rp{subtotal}")
+print("-"*30)
+print(f"TOTAL         : Rp{total}")
+print("="*30)
+print("   Terima kasih atas kunjungan Anda!")
+print("="*30)
