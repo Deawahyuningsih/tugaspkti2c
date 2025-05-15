@@ -414,41 +414,58 @@
 
 
          
-function checkout() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  if (cart.length === 0) {
-    alert('Keranjang belanja Anda kosong.');
-    return;
+<!-- Contoh produk -->
+<div class="product">
+  <h4>Nasi Goreng</h4>
+  <p>Harga: Rp 20.000</p>
+  <button onclick="addToCart('Nasi Goreng', 20000)">Pesan</button>
+</div>
+
+<div class="product">
+  <h4>Es Teh</h4>
+  <p>Harga: Rp 5.000</p>
+  <button onclick="addToCart('Es Teh', 5000)">Pesan</button>
+</div>
+
+<!-- Tempat struk otomatis -->
+<pre id="outputStruk" style="background:#f4f4f4; padding:10px; margin-top:20px;"></pre>
+
+<script>
+  let cart = [];
+
+  function addToCart(nama, harga) {
+    // Cek apakah produk sudah ada di cart
+    let found = cart.find(item => item.nama === nama);
+    if (found) {
+      found.jumlah++;
+    } else {
+      cart.push({ nama: nama, harga: harga, jumlah: 1 });
+    }
+    updateStruk();
   }
 
-  let struk = '===== STRUK PEMBELIAN =====\n';
-  let totalHarga = 0;
+  function updateStruk() {
+    if (cart.length === 0) {
+      document.getElementById('outputStruk').textContent = 'Keranjang belanja kosong.';
+      return;
+    }
 
-  cart.forEach((item, index) => {
-    const subtotal = item.harga * item.jumlah;
-    totalHarga += subtotal;
-    struk += `${index + 1}. ${item.nama}\n   Harga: Rp ${item.harga.toLocaleString()}\n   Jumlah: ${item.jumlah}\n   Subtotal: Rp ${subtotal.toLocaleString()}\n\n`;
-  });
+    let struk = '===== STRUK PEMBELIAN =====\n\n';
+    let totalHarga = 0;
 
-  struk += `Total Bayar: Rp ${totalHarga.toLocaleString()}\n`;
-  struk += '==========================\n';
-  struk += 'Terima kasih sudah berbelanja!';
-
-  // Tampilkan struk di elemen <pre id="outputStruk">
-  document.getElementById('outputStruk').textContent = struk;
-
-  // Bisa juga kosongkan keranjang setelah checkout jika perlu:
-  // localStorage.removeItem('cart');
-  // update tampilan keranjang di UI
-}
-
-
-     
- 
-    
-        
-      });
+    cart.forEach((item, index) => {
+      let subtotal = item.harga * item.jumlah;
+      totalHarga += subtotal;
+      struk += `${index + 1}. ${item.nama}\n`;
+      struk += `   Harga: Rp ${item.harga.toLocaleString('id-ID')}\n`;
+      struk += `   Jumlah: ${item.jumlah}\n`;
+      struk += `   Subtotal: Rp ${subtotal.toLocaleString('id-ID')}\n\n`;
     });
-  </script>
-</body>
-</html>
+
+    struk += `Total Bayar: Rp ${totalHarga.toLocaleString('id-ID')}\n`;
+    struk += '==========================\n';
+    struk += 'Terima kasih sudah berbelanja!';
+
+    document.getElementById('outputStruk').textContent = struk;
+  }
+</script>
