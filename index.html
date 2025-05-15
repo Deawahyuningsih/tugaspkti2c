@@ -414,58 +414,48 @@
 
 
          
-<!-- Contoh produk -->
-<div class="product">
-  <h4>Nasi Goreng</h4>
-  <p>Harga: Rp 20.000</p>
-  <button onclick="addToCart('Nasi Goreng', 20000)">Pesan</button>
-</div>
-
-<div class="product">
-  <h4>Es Teh</h4>
-  <p>Harga: Rp 5.000</p>
-  <button onclick="addToCart('Es Teh', 5000)">Pesan</button>
-</div>
-
 <!-- Tempat struk otomatis -->
-<pre id="outputStruk" style="background:#f4f4f4; padding:10px; margin-top:20px;"></pre>
+<pre id="outputStruk" style="background:#f4f4f4; padding:10px; margin-top:20px; white-space: pre-wrap;"></pre>
 
 <script>
+  // Keranjang belanja
   let cart = [];
 
-  function addToCart(nama, harga) {
-    // Cek apakah produk sudah ada di cart
-    let found = cart.find(item => item.nama === nama);
+  function addToCart(name, price, category) {
+    // Cari produk di cart
+    let found = cart.find(item => item.name === name);
     if (found) {
-      found.jumlah++;
+      found.quantity++;
     } else {
-      cart.push({ nama: nama, harga: harga, jumlah: 1 });
+      cart.push({ name, price, category, quantity: 1 });
     }
     updateStruk();
   }
 
   function updateStruk() {
+    const output = document.getElementById("outputStruk");
+
     if (cart.length === 0) {
-      document.getElementById('outputStruk').textContent = 'Keranjang belanja kosong.';
+      output.textContent = "Keranjang belanja kosong.";
       return;
     }
 
-    let struk = '===== STRUK PEMBELIAN =====\n\n';
-    let totalHarga = 0;
+    let struk = "===== STRUK PEMBELIAN =====\n\n";
+    let total = 0;
 
-    cart.forEach((item, index) => {
-      let subtotal = item.harga * item.jumlah;
-      totalHarga += subtotal;
-      struk += `${index + 1}. ${item.nama}\n`;
-      struk += `   Harga: Rp ${item.harga.toLocaleString('id-ID')}\n`;
-      struk += `   Jumlah: ${item.jumlah}\n`;
-      struk += `   Subtotal: Rp ${subtotal.toLocaleString('id-ID')}\n\n`;
+    cart.forEach((item, idx) => {
+      const subtotal = item.price * item.quantity;
+      total += subtotal;
+      struk += `${idx + 1}. ${item.name}\n`;
+      struk += `   Harga: Rp ${item.price.toLocaleString("id-ID")}\n`;
+      struk += `   Jumlah: ${item.quantity}\n`;
+      struk += `   Subtotal: Rp ${subtotal.toLocaleString("id-ID")}\n\n`;
     });
 
-    struk += `Total Bayar: Rp ${totalHarga.toLocaleString('id-ID')}\n`;
-    struk += '==========================\n';
-    struk += 'Terima kasih sudah berbelanja!';
+    struk += `Total Bayar: Rp ${total.toLocaleString("id-ID")}\n`;
+    struk += "===========================\n";
+    struk += "Terima kasih sudah memesan!";
 
-    document.getElementById('outputStruk').textContent = struk;
+    output.textContent = struk;
   }
 </script>
