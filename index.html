@@ -412,68 +412,244 @@
   </body>
 </html>
 
-!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bukti Transfer</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-  <div class="receipt-container" id="receipt-container"></div>
-
-  <div class="action-buttons">
-    <button onclick="window.print()">Cetak Bukti Transfer</button>
-  </div>
-
-  <script src="js/receipt.js"></script>
-</body>
-</html>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Cetak Struk</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Keranjang Belanja dengan Struk Otomatis</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
   <style>
-    #struk {
-      width: 300px;
-      font-family: monospace;
-      white-space: pre;
-      border: 1px solid #000;
+    #outputStruk {
+      background: #f8f8f8;
       padding: 10px;
-    }
-    @media print {
-      body * {
-        visibility: hidden;
-      }
-      #struk, #struk * {
-        visibility: visible;
-      }
-      #struk {
-        position: absolute;
-        left: 0;
-        top: 0;
-      }
+      border: 1px solid #ccc;
+      font-family: monospace;
+      white-space: pre-wrap;
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
 
-<div id="struk">
-VB's Marketplace
-------------------------------
-Tanggal : 08/05/2025
-Kasir   : Dea
-------------------------------
-Item      Qty  Harga   Total
-Es Buah    1  15.000   15.000
-Dimsum     1  20.000   20.000
-------------------------------
-Total               Rp35.000
-Bayar               Rp50.000
-Kembali             Rp15.000
-------------------------------
-Terima kasih!
-</div>
+  <div class="container my-4">
+
+    <h2>Produk</h2>
+    <div class="mb-3">
+      <!-- Contoh tombol tambah produk -->
+      <button class="btn btn-primary add-to-cart" data-name="Nasi Goreng" data-price="20000" data-category="Makanan">Tambah Nasi Goreng (Rp 20.000)</button>
+      <button class="btn btn-primary add-to-cart" data-name="Es Teh Manis" data-price="8000" data-category="Minuman">Tambah Es Teh Manis (Rp 8.000)</button>
+    </div>
+
+    <h2>Keranjang Belanja</h2>
+
+    <div id="empty-cart" class="alert alert-info d-none">
+      Keranjang belanja kosong.
+    </div>
+
+    <div id="cart-content" class="d-none">
+      <table id="cart-table" class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Nama</th>
+            <th>Harga</th>
+            <th>Jumlah</th>
+            <th>Total</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Isi cart dinamis -->
+        </tbody>
+      </table>
+      <h5 id="total-harga" class="text-end">Total: Rp 0</h5>
+      <button class="btn btn-danger" onclick="clearCart()">Kosongkan Keranjang</button>
+      <button class="btn btn-success" onclick="checkout()">Checkout</button>
+    </div>
+
+    <h2>Struk Pembayaran</h2>
+    <pre id="outputStruk">Keranjang kosong.</pre>
+
+  </div>
+
+  <script>
+    // Masukkan semua kode JS kamu yang sudah ada di sini
+    // Jangan lupa tambahkan fungsi renderReceipt() seperti ini:
+
+    // Format angka ke rupiah
+    function formatRupiah(number) {
+      return "Rp " + number.toLocaleString("id-ID");
+    }
+
+    // Render struk otomatis
+    function renderReceipt() {
+      const receiptEl = document.getElementById("outputStruk");
+      if (!receiptEl) return;
+
+      if (cart.length === 0) {
+        receiptEl.textContent = "Keranjang kosong.";
+        return;
+      }
+
+      let totalHarga = 0;
+      let receiptText = "";
+      receiptText += "VB's Marketplace\n";
+      receiptText += "--------------------------------\n";
+      receiptText += `Tanggal : ${new Date().toLocaleString("id-ID")}\n`;
+      receiptText += `Kasir   : Dea\n`;
+      receiptText += "--------------------------------\n";
+      receiptText += "Item          Qty    Harga     Total\n";
+
+      cart.forEach((item) => {
+        const itemTotal = item.price * item.qty;
+        totalHarga += itemTotal;
+
+        let name = item.name.length > 12 ? item.name.slice(0, 12) + "…" : item.name.padEnd(12, " ");
+        let qty = String(item.qty).padStart(3, " ");
+        let price = formatRupiah(item.price).padStart(9, " ");
+        let total = formatRupiah(itemTotal).padStart(9, " ");
+
+        receiptText += `${name} ${qty} ${price} ${total}\n`;
+      });
+
+      receiptText += "--------------------------------\n";
+      receiptText += `Total                 ${formatRupiah(totalHarga)}\n`;
+
+      const bayar = 100000;
+      const kembali = bayar - totalHarga;
+
+      receiptText += `Bayar                 ${formatRupiah(bayar)}\n`;
+      receiptText += `Kembali               ${formatRupiah(kembali)}\n`;
+      receiptText += "--------------------------------\n";
+      receiptText += "Terima kasih atas kunjungan Anda!\n";
+
+      receiptEl.textContent = receiptText;
+    }
+
+    // *** Salin seluruh kode keranjang kamu di sini ***
+    // Pastikan dalam renderCart() ada panggilan renderReceipt();
+
+    // Contoh minimal:
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function updateCartCount() {
+      const cartCount = cart.reduce((total, item) => total + item.qty, 0);
+      // Bisa update UI jumlah item di header kalau ada
+    }
+
+    function renderCart() {
+      const tbody = document.querySelector("#cart-table tbody");
+      tbody.innerHTML = "";
+      let totalHarga = 0;
+
+      if (cart.length === 0) {
+        document.getElementById("empty-cart").classList.remove("d-none");
+        document.getElementById("cart-content").classList.add("d-none");
+      } else {
+        document.getElementById("empty-cart").classList.add("d-none");
+        document.getElementById("cart-content").classList.remove("d-none");
+      }
+
+      cart.forEach((item, index) => {
+        const totalItem = item.price * item.qty;
+        totalHarga += totalItem;
+
+        tbody.innerHTML +=
+          `<tr>
+            <td>${item.name}</td>
+            <td>${formatRupiah(item.price)}</td>
+            <td>
+              <div class="input-group" style="max-width: 120px;">
+                <button class="btn btn-outline-secondary btn-sm" onclick="updateQuantity(${index}, -1)" ${item.qty <= 1 ? "disabled" : ""}>-</button>
+                <input type="text" class="form-control text-center" value="${item.qty}" readonly>
+                <button class="btn btn-outline-secondary btn-sm" onclick="updateQuantity(${index}, 1)">+</button>
+              </div>
+            </td>
+            <td>${formatRupiah(totalItem)}</td>
+            <td>
+              <button class="btn btn-danger btn-sm" onclick="removeItem(${index})">
+                <i class="fa fa-trash"></i> Hapus
+              </button>
+            </td>
+          </tr>`;
+      });
+
+      document.getElementById("total-harga").textContent =
+        "Total: " + formatRupiah(totalHarga);
+
+      renderReceipt();
+    }
+
+    function updateQuantity(index, change) {
+      cart[index].qty += change;
+      if (cart[index].qty <= 0) {
+        removeItem(index);
+        return;
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+      updateCartCount();
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+      updateCartCount();
+    }
+
+    function clearCart() {
+      if (confirm("Apakah Anda yakin ingin mengosongkan keranjang?")) {
+        cart = [];
+        localStorage.removeItem("cart");
+        renderCart();
+        updateCartCount();
+      }
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Keranjang belanja Anda kosong.");
+        return;
+      }
+      const totalPrice = cart.reduce((total, item) => total + item.price * item.qty, 0);
+      const confirmation = confirm(`Total belanja Anda: ${formatRupiah(totalPrice)}\n\nLanjutkan checkout?`);
+      if (confirmation) {
+        alert("Terima kasih telah berbelanja di VabsFood!\nPesanan Anda sedang diproses.");
+        cart = [];
+        localStorage.removeItem("cart");
+        renderCart();
+        updateCartCount();
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      updateCartCount();
+      renderCart();
+
+      const addButtons = document.querySelectorAll(".add-to-cart");
+      addButtons.forEach(button => {
+        button.onclick = function () {
+          const name = this.getAttribute("data-name");
+          const price = parseInt(this.getAttribute("data-price"));
+          const category = this.getAttribute("data-category");
+
+          const existingIndex = cart.findIndex(item => item.name === name);
+          if (existingIndex > -1) {
+            cart[existingIndex].qty += 1;
+          } else {
+            cart.push({name, price, category, qty: 1});
+          }
+
+          localStorage.setItem("cart", JSON.stringify(cart));
+          renderCart();
+          updateCartCount();
+
+          document.getElementById("cart-section")?.scrollIntoView({ behavior: "smooth" });
+          return false;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
