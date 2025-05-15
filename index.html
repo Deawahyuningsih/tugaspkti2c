@@ -478,63 +478,47 @@ Kembali             Rp15.000
 Terima kasih!
 </div>
 
- <!DOCTYPE html>
+
+ 
+<!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Struk Otomatis Update</title>
-<style>
-  #struk {
-    width: 320px;
-    font-family: monospace;
-    white-space: pre;
-    border: 1px solid #000;
-    padding: 10px;
-    margin-top: 20px;
-  }
-  button {
-    margin: 5px 0;
-    padding: 8px 12px;
-    font-weight: bold;
-  }
-  @media print {
-    body * {
-      visibility: hidden;
-    }
-    #struk, #struk * {
-      visibility: visible;
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Struk Otomatis VB's Marketplace</title>
+  <style>
     #struk {
-      position: absolute;
-      left: 0;
-      top: 0;
+      width: 300px;
+      font-family: monospace;
+      white-space: pre;
+      border: 1px solid #000;
+      padding: 10px;
+      margin-top: 20px;
     }
-  }
-</style>
+    button {
+      margin: 5px;
+    }
+  </style>
 </head>
 <body>
 
-<h2>Keranjang Belanja</h2>
-<div id="cart-items"></div>
+<h2>Daftar Produk</h2>
+<button onclick="addItem('Es Buah', 15000)">Tambah Es Buah (Rp 15.000)</button>
+<button onclick="addItem('Dimsum', 20000)">Tambah Dimsum (Rp 20.000)</button>
+<button onclick="addItem('Teh Manis', 8000)">Tambah Teh Manis (Rp 8.000)</button>
 
-<button onclick="addItem('Es Buah', 15000)">Tambah Es Buah (Rp15.000)</button><br />
-<button onclick="addItem('Dimsum', 20000)">Tambah Dimsum (Rp20.000)</button><br />
-<button onclick="addItem('French Fries', 18000)">Tambah French Fries (Rp18.000)</button>
-
-<div id="struk"></div>
-
-<button onclick="printStruk()">Cetak Struk</button>
+<div id="struk">
+  Keranjang kosong.
+</div>
 
 <script>
   let cart = [];
-  let bayar = 0;
 
-  function formatRupiah(num) {
-    return num.toString().replace(/\
+  function addItem(name, price) {
+    const index = cart.findIndex(item => item.name === name);
+    if (index > -1) {
+      cart[index].qty
 
 
 
-   
-    
-
+ 
