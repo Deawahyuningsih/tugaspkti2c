@@ -478,12 +478,12 @@ Kembali             Rp15.000
 Terima kasih!
 </div>
 
-  <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Struk Otomatis VB's Marketplace</title>
+<title>Struk Otomatis Update</title>
 <style>
   #struk {
     width: 320px;
@@ -494,7 +494,7 @@ Terima kasih!
     margin-top: 20px;
   }
   button {
-    margin-top: 10px;
+    margin: 5px 0;
     padding: 8px 12px;
     font-weight: bold;
   }
@@ -516,90 +516,25 @@ Terima kasih!
 <body>
 
 <h2>Keranjang Belanja</h2>
-
 <div id="cart-items"></div>
+
+<button onclick="addItem('Es Buah', 15000)">Tambah Es Buah (Rp15.000)</button><br />
+<button onclick="addItem('Dimsum', 20000)">Tambah Dimsum (Rp20.000)</button><br />
+<button onclick="addItem('French Fries', 18000)">Tambah French Fries (Rp18.000)</button>
 
 <div id="struk"></div>
 
 <button onclick="printStruk()">Cetak Struk</button>
 
 <script>
-  // Contoh data keranjang (bisa kamu ganti dengan data dinamis)
-  const cart = [
-    {name: 'Es Buah', qty: 1, price: 15000},
-    {name: 'Dimsum', qty: 1, price: 20000},
-  ];
-
-  const bayar = 50000;  // contoh pembayaran
+  let cart = [];
+  let bayar = 0;
 
   function formatRupiah(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  }
+    return num.toString().replace(/\
 
-  function renderCart() {
-    const container = document.getElementById('cart-items');
-    if (cart.length === 0) {
-      container.textContent = 'Keranjang kosong.';
-      document.getElementById('struk').textContent = '';
-      return;
-    }
-    let html = '';
-    cart.forEach(item => {
-      html += `${item.name} - Qty: ${item.qty}, Harga: Rp ${formatRupiah(item.price)}\n`;
-    });
-    container.textContent = html;
-  }
 
-  function renderStruk() {
-    const strukEl = document.getElementById('struk');
 
-    if (cart.length === 0) {
-      strukEl.textContent = '';
-      return;
-    }
+   
+    
 
-    let tanggal = new Date().toLocaleDateString('id-ID');
-    let kasir = 'Dea';
-
-    let header = `VB's Marketplace\n------------------------------\n`;
-    header += `Tanggal : ${tanggal}\n`;
-    header += `Kasir   : ${kasir}\n------------------------------\n`;
-    header += `Item      Qty  Harga   Total\n`;
-
-    let total = 0;
-    let lines = '';
-    cart.forEach(item => {
-      const subtotal = item.price * item.qty;
-      total += subtotal;
-
-      // Format untuk rata kiri dan kanan (monospace)
-      // Contoh: "Es Buah    1  15.000   15.000"
-      let name = item.name.padEnd(10, ' ');
-      let qty = String(item.qty).padEnd(3, ' ');
-      let harga = formatRupiah(item.price).padStart(6, ' ');
-      let subtotalStr = formatRupiah(subtotal).padStart(7, ' ');
-
-      lines += `${name}${qty}${harga}  ${subtotalStr}\n`;
-    });
-
-    let footer = `------------------------------\n`;
-    footer += `Total               Rp${formatRupiah(total)}\n`;
-    footer += `Bayar               Rp${formatRupiah(bayar)}\n`;
-    footer += `Kembali             Rp${formatRupiah(bayar - total)}\n`;
-    footer += `------------------------------\n`;
-    footer += `Terima kasih!`;
-
-    strukEl.textContent = header + lines + footer;
-  }
-
-  function printStruk() {
-    window.print();
-  }
-
-  // Initial render
-  renderCart();
-  renderStruk();
-</script>
-
-</body>
-</html>
