@@ -414,76 +414,6 @@
 
 
 <!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Menu & Struk Otomatis</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <style>
-    #struk {
-      white-space: pre-wrap;
-      background: #f8f9fa;
-      border: 1px solid #ddd;
-      padding: 15px;
-      margin-top: 20px;
-      font-family: monospace;
-      max-width: 400px;
-    }
-  </style>
-</head>
-<body>
-
-<div class="container my-4">
-  <h1>Menu</h1>
-
-  <!-- Container menu -->
-  <div id="all-items" class="row g-3"></div>
-
-  <!-- Struk pesanan -->
-  <h2 class="mt-5">Struk Pesanan</h2>
-  <div id="struk">Keranjang belanja kosong.</div>
-</div>
-
-<script>
-  const menuItems = [
-    {
-      name: "Spaghetti",
-      image: "https://images.unsplash.com/photo-1506919638378-07c16afcd6f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
-      description: "Spaghetti dengan saus bolognese dan keju parmesan",
-      price: 30000,
-      category: "makanan",
-      bestSeller: true,
-    },
-    {
-      name: "Mie Ayam",
-      image: "https://cove-blog-id.sgp1.cdn.digitaloceanspaces.com/cove-blog-id/2024/07/mie-ayam-bandung.jpg",
-      description: "Mie ayam spesial dengan topping ayam cincang dan pangsit goreng",
-      price: 15000,
-      category: "makanan",
-      bestSeller: false,
-    },
-    {
-      name: "Dimsum",
-      image: "https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/p2/255/2024/11/14/IMG_4814-81774369.jpeg",
-      description: "Dimsum isi ayam dan udang dengan saus spesial",
-      price: 20000,
-      category: "makanan",
-      bestSeller: false,
-    },
-    {
-      name: "Chicken Burger",
-      image: "https://simplehomeedit.com/wp-content/uploads/2022/09/Southern-Fried-Chicken-Burger-1.webp",
-      description: "Burger ayam crispy dengan saus spesial dan sayuran segar",
-      price: 20000,
-      category: "makanan",
-      bestSeller: false,
-    },
-    {
-      name: "French Fries",
-      image: "https://images.themodernproper
-
-        <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -506,5 +436,75 @@
 <div id="menu" class="menu-container"></div>
 
 <div id="struk" class="struk">
-  <h2>Struk
+  <h2>Struk Pesanan</h2>
+  <div id="struk-items">Keranjang belanja kosong.</div>
+</div>
 
+<script>
+const menuItems = [
+  { name: "Spaghetti", price: 30000, image: "https://images.unsplash.com/photo-1506919638378-07c16afcd6f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" },
+  { name: "Mie Ayam", price: 15000, image: "https://cove-blog-id.sgp1.cdn.digitaloceanspaces.com/cove-blog-id/2024/07/mie-ayam-bandung.jpg" },
+  { name: "Dimsum", price: 20000, image: "https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/p2/255/2024/11/14/IMG_4814-81774369.jpeg" },
+];
+
+const cart = {};
+
+function createMenuCard(item) {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  card.innerHTML = `
+    <img src="${item.image}" alt="${item.name}">
+    <h3>${item.name}</h3>
+    <p>Harga: Rp ${item.price.toLocaleString()}</p>
+    <button onclick="addToCart('${item.name}', ${item.price})">Tambah</button>
+  `;
+  return card;
+}
+
+function populateMenu() {
+  const menuContainer = document.getElementById("menu");
+  menuContainer.innerHTML = "";
+  menuItems.forEach(item => {
+    menuContainer.appendChild(createMenuCard(item));
+  });
+}
+
+function addToCart(name, price) {
+  if (cart[name]) {
+    cart[name].qty++;
+  } else {
+    cart[name] = { price: price, qty: 1 };
+  }
+  updateStruk();
+}
+
+function updateStruk() {
+  const strukItemsDiv = document.getElementById("struk-items");
+  const items = Object.entries(cart);
+  if (items.length === 0) {
+    strukItemsDiv.innerHTML = "Keranjang belanja kosong.";
+    return;
+  }
+
+  let html = "";
+  let total = 0;
+  items.forEach(([name, data], index) => {
+    const subtotal = data.price * data.qty;
+    total += subtotal;
+    html += `<div class="struk-item">
+      ${index + 1}. ${name} - Rp ${data.price.toLocaleString()} x ${data.qty} = Rp ${subtotal.toLocaleString()}
+    </div>`;
+  });
+
+  html += `<div class="total">TOTAL: Rp ${total.toLocaleString()}</div>`;
+  strukItemsDiv.innerHTML = html;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  populateMenu();
+});
+</script>
+
+</body>
+</html>
