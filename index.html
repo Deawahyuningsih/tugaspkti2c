@@ -415,35 +415,32 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bukti Transfer</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-  <div class="receipt-container" id="receipt-container"></div>
-
-  <div class="action-buttons">
-    <button onclick="window.print()">Cetak Bukti Transfer</button>
-  </div>
-
-  <script src="js/receipt.js"></script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="id">
-<head>
   <meta charset="UTF-8">
-  <title>Cetak Struk</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cetak Struk Dinamis</title>
   <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+
+    input {
+      margin: 5px;
+    }
+
     #struk {
       width: 300px;
       font-family: monospace;
       white-space: pre;
       border: 1px solid #000;
       padding: 10px;
+      margin-top: 20px;
     }
+
+    .action-buttons {
+      margin-top: 10px;
+    }
+
     @media print {
       body * {
         visibility: hidden;
@@ -453,28 +450,90 @@
       }
       #struk {
         position: absolute;
-        left: 0;
         top: 0;
+        left: 0;
       }
     }
   </style>
 </head>
 <body>
 
-<div id="struk">
-VB's Marketplace
-------------------------------
-Tanggal : 08/05/2025
-Kasir   : Dea
-------------------------------
-Item      Qty  Harga   Total
-Es Buah    1  15.000   15.000
-Dimsum     1  20.000   20.000
-------------------------------
-Total               Rp35.000
-Bayar               Rp50.000
-Kembali             Rp15.000
-------------------------------
-Terima kasih!
-</div>
+  <h2>Input Pesanan</h2>
+  <label>Dimsum: <input type="text" id="nama"></label>
+  <label>2: <input type="number" id="qty" min="1" value="1"></label>
+  <label>20.000: <input type="number" id="harga" min="0"></label>
+  <button onclick="tambahItem()">Tambah ke Struk</button>
 
+  <div class="action-buttons">
+    <label>Bayar: <input type="number" id="bayar" min="0"></label>
+    <button onclick="cetak()">Cetak Struk</button>
+  </div>
+
+  <div id="struk"></div>
+
+  <script>
+    const data = {
+      tanggal: new Date().toLocaleDateString("id-ID"),
+      kasir: "Dea",
+      items: []
+    };
+
+    function formatRupiah(angka) {
+      return "Rp" + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function tambahItem() {
+      const nama = document.getElementById('nama').value.trim();
+      const qty = parseInt(document.getElementById('qty').value);
+      const harga = parseInt(document.getElementById('harga').value);
+
+      if (!nama || !qty || !harga) {
+        alert("Lengkapi semua field!");
+        return;
+      }
+
+      data.items.push({ nama, qty, harga });
+      document.getElementById('nama').value = "";
+      document.getElementById('qty').value = 1;
+      document.getElementById('harga').value = "";
+      tampilkanStruk();
+    }
+
+    function tampilkanStruk() {
+      let struk = "VB's Marketplace\n";
+      struk += "------------------------------\n";
+      struk += Tanggal : ${data.tanggal}\n;
+      struk += Kasir   : ${data.kasir}\n;
+      struk += "------------------------------\n";
+      struk += "Item      Qty  Harga   Total\n";
+
+      let total = 0;
+      data.items.forEach(item => {
+        const totalItem = item.qty * item.harga;
+        total += totalItem;
+        struk += ${item.nama.padEnd(10)} ${item.qty}  ${item.harga.toLocaleString()}   ${totalItem.toLocaleString()}\n;
+      });
+
+      const bayar = parseInt(document.getElementById('bayar').value || 0);
+      const kembali = bayar - total;
+
+      struk += "------------------------------\n";
+      struk += Total               ${formatRupiah(total)}\n;
+      if (bayar) {
+        struk += Bayar               ${formatRupiah(bayar)}\n;
+        struk += Kembali             ${formatRupiah(kembali)}\n;
+      }
+      struk += "------------------------------\n";
+      struk += "Terima kasih!";
+
+      document.getElementById("struk").textContent = struk;
+    }
+
+    function cetak() {
+      tampilkanStruk();
+      window.print();
+    }
+  </script>
+
+</body>
+</html>
