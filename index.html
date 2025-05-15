@@ -412,11 +412,94 @@
   </body>
 </html>
 
-<button onclick="tampilkanStruk()">Keranjang Belanja</button>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Struk Otomatis</title>
+  <style>
+    #struk {
+      width: 300px;
+      font-family: monospace;
+      white-space: pre;
+      border: 1px solid #000;
+      padding: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
 
-document.getElementById("tombol-keranjang").addEventListener("click", tampilkanStruk);
- <button id="tombol-keranjang">Keranjang Belanja</button>
-   
-<button onclick="tampilkanStruk(); window.print()">Keranjang Belanja</button>
+<h3>Tambah Menu:</h3>
+<label>Nama: <input type="text" id="nama"></label><br>
+<label>Qty: <input type="number" id="qty" value="1" min="1"></label><br>
+<label>Harga: <input type="number" id="harga" value="0" min="0"></label><br>
+<button onclick="tambahItem()">Tambah ke Keranjang</button>
 
+<h3>Checkout:</h3>
+<label>Bayar: <input type="number" id="bayar" value="0" min="0"></label>
+<button onclick="checkout()">Checkout & Tampilkan Struk</button>
+
+<div id="struk"></div>
+
+<script>
+const data = {
+  tanggal: new Date().toLocaleDateString("id-ID"),
+  kasir: "Dea",
+  items: []
+};
+
+function formatRupiah(angka) {
+  return "Rp" + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+function tambahItem() {
+  const nama = document.getElementById("nama").value;
+  const qty = parseInt(document.getElementById("qty").value);
+  const harga = parseInt(document.getElementById("harga").value);
+  
+  if (!nama || qty <= 0 || harga <= 0) {
+    alert("Lengkapi nama, qty dan harga!");
+    return;
+  }
+
+  data.items.push({ nama, qty, harga, total: qty * harga });
+
+  // Kosongkan input
+  document.getElementById("nama").value = '';
+  document.getElementById("qty").value = 1;
+  document.getElementById("harga").value = 0;
+
+  alert("Item ditambahkan ke keranjang!");
+}
+
+function checkout() {
+  const bayar = parseInt(document.getElementById("bayar").value);
+  let strukText = "VB's Marketplace\n";
+  strukText += "------------------------------\n";
+  strukText += "Tanggal : " + data.tanggal + "\n";
+  strukText += "Kasir   : " + data.kasir + "\n";
+  strukText += "------------------------------\n";
+  strukText += "Item      Qty  Harga   Total\n";
+
+  let totalBelanja = 0;
+  data.items.forEach(item => {
+    strukText += ${item.nama.padEnd(10)} ${item.qty}  ${formatRupiah(item.harga).padEnd(8)} ${formatRupiah(item.total)}\n;
+    totalBelanja += item.total;
+  });
+
+  strukText += "------------------------------\n";
+  strukText += "Total               " + formatRupiah(totalBelanja) + "\n";
+  strukText += "Bayar               " + formatRupiah(bayar) + "\n";
+  strukText += "Kembali             " + formatRupiah(bayar - totalBelanja) + "\n";
+  strukText += "------------------------------\n";
+  strukText += "Terima kasih!\n";
+
+  document.getElementById("struk").innerText = strukText;
+}
+</script>
+
+</body>
+</html>
 
