@@ -413,28 +413,70 @@
 </html>
 
 
-         
-<!-- Tempat struk otomatis -->
-<pre id="outputStruk" style="background:#f4f4f4; padding:10px; margin-top:20px; white-space: pre-wrap;"></pre>
+ <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Menu dan Struk Otomatis</title>
+  <style>
+    #outputStruk {
+      background: #f4f4f4;
+      padding: 10px;
+      margin-top: 20px;
+      white-space: pre-wrap;
+      font-family: monospace;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Menu Makanan</h1>
+
+  <div id="menu-container"></div>
+
+  <h2>Struk Pesanan</h2>
+  <pre id="outputStruk">Keranjang belanja kosong.</pre>
 
 <script>
+  // Contoh data menu sederhana
+  const menuItems = [
+    { name: "Spaghetti", price: 30000 },
+    { name: "Mie Ayam", price: 15000 },
+    { name: "Dimsum", price: 20000 },
+  ];
+
+  // Buat tampilan menu dengan tombol tambah
+  const menuContainer = document.getElementById("menu-container");
+
+  menuItems.forEach(item => {
+    const div = document.createElement("div");
+    div.style.marginBottom = "10px";
+
+    div.innerHTML = `
+      <strong>${item.name}</strong> - Rp ${item.price.toLocaleString()} 
+      <button onclick="addToCart('${item.name}', ${item.price})">Tambah</button>
+    `;
+    menuContainer.appendChild(div);
+  });
+
   // Keranjang belanja
   let cart = [];
 
-  function addToCart(name, price, category) {
-    // Cari produk di cart
-    let found = cart.find(item => item.name === name);
+  // Fungsi tambah ke keranjang dan update struk
+  function addToCart(name, price) {
+    const found = cart.find(i => i.name === name);
     if (found) {
       found.quantity++;
     } else {
-      cart.push({ name, price, category, quantity: 1 });
+      cart.push({ name, price, quantity: 1 });
     }
     updateStruk();
   }
 
   function updateStruk() {
     const output = document.getElementById("outputStruk");
-
     if (cart.length === 0) {
       output.textContent = "Keranjang belanja kosong.";
       return;
@@ -447,15 +489,19 @@
       const subtotal = item.price * item.quantity;
       total += subtotal;
       struk += `${idx + 1}. ${item.name}\n`;
-      struk += `   Harga: Rp ${item.price.toLocaleString("id-ID")}\n`;
+      struk += `   Harga: Rp ${item.price.toLocaleString()}\n`;
       struk += `   Jumlah: ${item.quantity}\n`;
-      struk += `   Subtotal: Rp ${subtotal.toLocaleString("id-ID")}\n\n`;
+      struk += `   Subtotal: Rp ${subtotal.toLocaleString()}\n\n`;
     });
 
-    struk += `Total Bayar: Rp ${total.toLocaleString("id-ID")}\n`;
+    struk += `Total Bayar: Rp ${total.toLocaleString()}\n`;
     struk += "===========================\n";
     struk += "Terima kasih sudah memesan!";
 
     output.textContent = struk;
   }
 </script>
+
+</body>
+</html>
+        
