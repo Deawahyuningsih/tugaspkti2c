@@ -412,94 +412,104 @@
   </body>
 </html>
 
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Struk Otomatis</title>
+  <title>VB's Marketplace</title>
   <style>
     #struk {
-      width: 300px;
-      font-family: monospace;
-      white-space: pre;
-      border: 1px solid #000;
+      white-space: pre-wrap;
+      background: #f1f1f1;
       padding: 10px;
       margin-top: 20px;
+      border: 1px solid #ccc;
     }
   </style>
 </head>
 <body>
 
-<h3>Tambah Menu:</h3>
-<label>Nama: <input type="text" id="nama"></label><br>
-<label>Qty: <input type="number" id="qty" value="1" min="1"></label><br>
-<label>Harga: <input type="number" id="harga" value="0" min="0"></label><br>
-<button onclick="tambahItem()">Tambah ke Keranjang</button>
+  <h1>Menu</h1>
+  <div>
+    <p>Es Buah - Rp 15.000 <button onclick="tambahKeKeranjang('Es Buah', 15000)">Tambah</button></p>
+    <p>Caffe Latte - Rp 25.000 <button onclick="tambahKeKeranjang('Caffe Latte', 25000)">Tambah</button></p>
+  </div>
 
-<h3>Checkout:</h3>
-<label>Bayar: <input type="number" id="bayar" value="0" min="0"></label>
-<button onclick="checkout()">Checkout & Tampilkan Struk</button>
+  <h2>Keranjang Belanja</h2>
+  <div id="keranjang"></div>
 
-<div id="struk"></div>
+  <div>
+    <label>Bayar: <input type="number" id="bayar" min="0" /></label>
+    <button onclick="checkout()">Checkout</button>
+  </div>
 
-<script>
-const data = {
-  tanggal: new Date().toLocaleDateString("id-ID"),
-  kasir: "Dea",
-  items: []
-};
+  <div id="struk"></div>
 
-function formatRupiah(angka) {
-  return "Rp" + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
+  <script>
+    const keranjang = [];
 
-function tambahItem() {
-  const nama = document.getElementById("nama").value;
-  const qty = parseInt(document.getElementById("qty").value);
-  const harga = parseInt(document.getElementById("harga").value);
-  
-  if (!nama || qty <= 0 || harga <= 0) {
-    alert("Lengkapi nama, qty dan harga!");
-    return;
-  }
+    function formatRupiah(angka) {
+      return "Rp " + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
 
-  data.items.push({ nama, qty, harga, total: qty * harga });
+    function tambahKeKeranjang(nama, harga) {
+      const index = keranjang.findIndex(item => item.nama === nama);
+      if (index > -1) {
+        keranjang[index].qty += 1;
+        keranjang[index].total += harga;
+      } else {
+        keranjang.push({ nama, harga, qty: 1, total: harga });
+      }
+      tampilkanKeranjang();
+    }
 
-  // Kosongkan input
-  document.getElementById("nama").value = '';
-  document.getElementById("qty").value = 1;
-  document.getElementById("harga").value = 0;
+    function tampilkanKeranjang() {
+      const div = document.getElementById("keranjang");
+      if (keranjang.length === 0) {
+        div.innerHTML = "<p>Keranjang kosong</p>";
+        return;
+      }
+      let html = "<ul>";
+      keranjang.forEach(item => {
+        html += <li>${item.nama} x${item.qty} = ${formatRupiah(item.total)}</li>;
+      });
+      html += "</ul>";
+      div.innerHTML = html;
+    }
 
-  alert("Item ditambahkan ke keranjang!");
-}
+    function checkout() {
+      const bayar = parseInt(document.getElementById("bayar").value);
+      if (keranjang.length === 0) {
+        alert("Keranjang masih kosong!");
+        return;
+      }
 
-function checkout() {
-  const bayar = parseInt(document.getElementById("bayar").value);
-  let strukText = "VB's Marketplace\n";
-  strukText += "------------------------------\n";
-  strukText += "Tanggal : " + data.tanggal + "\n";
-  strukText += "Kasir   : " + data.kasir + "\n";
-  strukText += "------------------------------\n";
-  strukText += "Item      Qty  Harga   Total\n";
+      let totalBelanja = 0;
+      let struk = "===== VB's Marketplace =====\n";
+      struk += "Tanggal: " + new Date().toLocaleDateString("id-ID") + "\n";
+      struk += "-----------------------------\n";
 
-  let totalBelanja = 0;
-  data.items.forEach(item => {
-    strukText += ${item.nama.padEnd(10)} ${item.qty}  ${formatRupiah(item.harga).padEnd(8)} ${formatRupiah(item.total)}\n;
-    totalBelanja += item.total;
-  });
+      keranjang.forEach(item => {
+        struk += ${item.nama.padEnd(15)} x${item.qty} = ${formatRupiah(item.total)}\n;
+        totalBelanja += item.total;
+      });
 
-  strukText += "------------------------------\n";
-  strukText += "Total               " + formatRupiah(totalBelanja) + "\n";
-  strukText += "Bayar               " + formatRupiah(bayar) + "\n";
-  strukText += "Kembali             " + formatRupiah(bayar - totalBelanja) + "\n";
-  strukText += "------------------------------\n";
-  strukText += "Terima kasih!\n";
+      struk += "-----------------------------\n";
+      struk += "Total: " + formatRupiah(totalBelanja) + "\n";
+      struk += "Bayar: " + formatRupiah(bayar) + "\n";
 
-  document.getElementById("struk").innerText = strukText;
-}
-</script>
+      const kembalian = bayar - totalBelanja;
+      if (kembalian < 0) {
+        struk += "Kekurangan: " + formatRupiah(Math.abs(kembalian)) + "\n";
+      } else {
+        struk += "Kembali: " + formatRupiah(kembalian) + "\n";
+      }
 
+      struk += "=============================";
+
+      document.getElementById("struk").innerText = struk;
+    }
+  </script>
 </body>
 </html>
-
