@@ -413,103 +413,92 @@
 </html>
 
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <title>VB's Marketplace</title>
-  <style>
-    #struk {
-      white-space: pre-wrap;
-      background: #f1f1f1;
-      padding: 10px;
-      margin-top: 20px;
-      border: 1px solid #ccc;
+<script>
+  let cart = [];
+
+  function addToCart(item) {
+    const found = cart.find((i) => i.id === item.id);
+    if (found) {
+      found.qty++;
+    } else {
+      cart.push({ ...item, qty: 1 });
     }
-  </style>
-</head>
-<body>
+    updateCartUI();
+  }
 
-  <h1>Menu</h1>
-  <div>
-    <p>Es Buah - Rp 15.000 <button onclick="tambahKeKeranjang('Es Buah', 15000)">Tambah</button></p>
-    <p>Caffe Latte - Rp 25.000 <button onclick="tambahKeKeranjang('Caffe Latte', 25000)">Tambah</button></p>
-  </div>
+  function updateCartUI() {
+    const cartTable = document.querySelector("#cart-table tbody");
+    const cartCount = document.getElementById("cart-count");
+    const totalHargaEl = document.getElementById("total-harga");
+    const emptyCart = document.getElementById("empty-cart");
+    const cartContent = document.getElementById("cart-content");
 
-  <h2>Keranjang Belanja</h2>
-  <div id="keranjang"></div>
+    cartTable.innerHTML = "";
+    let total = 0;
 
-  <div>
-    <label>Bayar: <input type="number" id="bayar" min="0" /></label>
-    <button onclick="checkout()">Checkout</button>
-  </div>
+    if (cart.length === 0) {
+      cartContent.classList.add("d-none");
+      emptyCart.classList.remove("d-none");
+    } else {
+      cartContent.classList.remove("d-none");
+      emptyCart.classList.add("d-none");
 
-  <div id="struk"></div>
+      cart.forEach((item, index) => {
+        const itemTotal = item.harga * item.qty;
+        total += itemTotal;
 
-  <script>
-    const keranjang = [];
-
-    function formatRupiah(angka) {
-      return "Rp " + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-
-    function tambahKeKeranjang(nama, harga) {
-      const index = keranjang.findIndex(item => item.nama === nama);
-      if (index > -1) {
-        keranjang[index].qty += 1;
-        keranjang[index].total += harga;
-      } else {
-        keranjang.push({ nama, harga, qty: 1, total: harga });
-      }
-      tampilkanKeranjang();
-    }
-
-    function tampilkanKeranjang() {
-      const div = document.getElementById("keranjang");
-      if (keranjang.length === 0) {
-        div.innerHTML = "<p>Keranjang kosong</p>";
-        return;
-      }
-      let html = "<ul>";
-      keranjang.forEach(item => {
-        html += <li>${item.nama} x${item.qty} = ${formatRupiah(item.total)}</li>;
+        const row = `
+          <tr>
+            <td>${item.nama}</td>
+            <td>Rp ${item.harga.toLocaleString()}</td>
+            <td>${item.qty}</td>
+            <td>Rp ${itemTotal.toLocaleString()}</td>
+            <td><button class="btn btn-sm btn-danger" onclick="removeItem(${index})">Hapus</button></td>
+          </tr>`;
+        cartTable.innerHTML += row;
       });
-      html += "</ul>";
-      div.innerHTML = html;
     }
 
-    function checkout() {
-      const bayar = parseInt(document.getElementById("bayar").value);
-      if (keranjang.length === 0) {
-        alert("Keranjang masih kosong!");
-        return;
-      }
+    cartCount.textContent = cart.length;
+    totalHargaEl.textContent = `Total: Rp ${total.toLocaleString()}`;
+  }
 
-      let totalBelanja = 0;
-      let struk = "===== VB's Marketplace =====\n";
-      struk += "Tanggal: " + new Date().toLocaleDateString("id-ID") + "\n";
-      struk += "-----------------------------\n";
+  function removeItem(index) {
+    cart.splice(index, 1);
+    updateCartUI();
+  }
 
-      keranjang.forEach(item => {
-        struk += ${item.nama.padEnd(15)} x${item.qty} = ${formatRupiah(item.total)}\n;
-        totalBelanja += item.total;
-      });
+  function clearCart() {
+    cart = [];
+    updateCartUI();
+    document.getElementById("outputStruk").textContent = "";
+  }
 
-      struk += "-----------------------------\n";
-      struk += "Total: " + formatRupiah(totalBelanja) + "\n";
-      struk += "Bayar: " + formatRupiah(bayar) + "\n";
-
-      const kembalian = bayar - totalBelanja;
-      if (kembalian < 0) {
-        struk += "Kekurangan: " + formatRupiah(Math.abs(kembalian)) + "\n";
-      } else {
-        struk += "Kembali: " + formatRupiah(kembalian) + "\n";
-      }
-
-      struk += "=============================";
-
-      document.getElementById("struk").innerText = struk;
+  function checkout() {
+    if (cart.length === 0) {
+      alert("Keranjang kosong!");
+      return;
     }
-  </script>
-</body>
-</html>
+
+    let struk = "===== STRUK PEMBELIAN =====\n";
+    let total = 0;
+
+    cart.forEach((item, i) => {
+      const subtotal = item.harga * item.qty;
+      total += subtotal;
+      struk += `${i + 1}. ${item.nama} x ${item.qty} = Rp ${subtotal.toLocaleString()}\n`;
+    });
+
+    struk += "--------------------------\n";
+    struk += `TOTAL: Rp ${total.toLocaleString()}\n`;
+    struk += "Terima kasih telah berbelanja!\n==============================";
+
+    document.getElementById("outputStruk").textContent = struk;
+
+    // Optional: clear cart after checkout
+    // clearCart();
+  }
+
+  // Contoh pemanggilan addToCart dari menu.js atau produk
+  // addToCart({ id: 1, nama: "Nasi Goreng", harga: 15000 });
+</script>
