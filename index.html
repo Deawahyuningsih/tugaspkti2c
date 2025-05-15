@@ -412,196 +412,194 @@
   </body>
 </html>
 
-
-<!DOCTYPE html>
-<html lang="en">
+!DOCTYPE html>
+<html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Menu & Struk Otomatis</title>
-<style>
-  body { font-family: Arial, sans-serif; padding: 20px; }
-  .menu-container { display: flex; flex-wrap: wrap; gap: 15px; }
-  .card { border: 1px solid #ccc; border-radius: 5px; width: 250px; padding: 10px; }
-  .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; }
-  .struk { margin-top: 30px; border-top: 2px solid #333; padding-top: 20px; max-width: 400px; }
-  .struk h2 { margin-bottom: 10px; }
-  .struk-item { margin-bottom: 8px; }
-  .total { font-weight: bold; font-size: 1.2em; margin-top: 15px; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bukti Transfer</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <div class="receipt-container" id="receipt-container"></div>
 
-<h1>Daftar Menu</h1>
-<div id="menu" class="menu-container"></div>
+  <div class="action-buttons">
+    <button onclick="window.print()">Cetak Bukti Transfer</button>
+  </div>
 
-<div id="struk" class="struk">
-  <h2>Struk Pesanan</h2>
-  <div id="struk-items">Keranjang belanja kosong.</div>
-</div>
-
-<script>
-const menuItems = [
-  { name: "Spaghetti", price: 30000, image: "https://images.unsplash.com/photo-1506919638378-07c16afcd6f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" },
-  { name: "Mie Ayam", price: 15000, image: "https://cove-blog-id.sgp1.cdn.digitaloceanspaces.com/cove-blog-id/2024/07/mie-ayam-bandung.jpg" },
-  { name: "Dimsum", price: 20000, image: "https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/p2/255/2024/11/14/IMG_4814-81774369.jpeg" },
-];
-
-const cart = {};
-
-function createMenuCard(item) {
-  const card = document.createElement("div");
-  card.className = "card";
-
-  card.innerHTML = `
-    <img src="${item.image}" alt="${item.name}">
-    <h3>${item.name}</h3>
-    <p>Harga: Rp ${item.price.toLocaleString()}</p>
-    <button onclick="addToCart('${item.name}', ${item.price})">Tambah</button>
-  `;
-  return card;
-}
-
-function populateMenu() {
-  const menuContainer = document.getElementById("menu");
-  menuContainer.innerHTML = "";
-  menuItems.forEach(item => {
-    menuContainer.appendChild(createMenuCard(item));
-  });
-}
-
-function addToCart(name, price) {
-  if (cart[name]) {
-    cart[name].qty++;
-  } else {
-    cart[name] = { price: price, qty: 1 };
-  }
-  updateStruk();
-}
-
-function updateStruk() {
-  const strukItemsDiv = document.getElementById("struk-items");
-  const items = Object.entries(cart);
-  if (items.length === 0) {
-    strukItemsDiv.innerHTML = "Keranjang belanja kosong.";
-    return;
-  }
-
-  let html = "";
-  let total = 0;
-  items.forEach(([name, data], index) => {
-    const subtotal = data.price * data.qty;
-    total += subtotal;
-    html += `<div class="struk-item">
-      ${index + 1}. ${name} - Rp ${data.price.toLocaleString()} x ${data.qty} = Rp ${subtotal.toLocaleString()}
-    </div>`;
-  });
-
-  html += `<div class="total">TOTAL: Rp ${total.toLocaleString()}</div>`;
-  strukItemsDiv.innerHTML = html;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  populateMenu();
-});
-</script>
-
+  <script src="js/receipt.js"></script>
 </body>
 </html>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Cetak Struk</title>
+  <style>
+    #struk {
+      width: 300px;
+      font-family: monospace;
+      white-space: pre;
+      border: 1px solid #000;
+      padding: 10px;
+    }
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #struk, #struk * {
+        visibility: visible;
+      }
+      #struk {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="struk">
+VB's Marketplace
+------------------------------
+Tanggal : 08/05/2025
+Kasir   : Dea
+------------------------------
+Item      Qty  Harga   Total
+Es Buah    1  15.000   15.000
+Dimsum     1  20.000   20.000
+------------------------------
+Total               Rp35.000
+Bayar               Rp50.000
+Kembali             Rp15.000
+------------------------------
+Terima kasih!
+</div>
+
+  <!DOCTYPE html>
+<html lang="id">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Menu & Struk Otomatis</title>
+<title>Struk Otomatis VB's Marketplace</title>
 <style>
-  body { font-family: Arial, sans-serif; padding: 20px; }
-  .menu-container { display: flex; flex-wrap: wrap; gap: 15px; }
-  .card { border: 1px solid #ccc; border-radius: 5px; width: 250px; padding: 10px; }
-  .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; }
-  .struk { margin-top: 30px; border-top: 2px solid #333; padding-top: 20px; max-width: 400px; }
-  .struk h2 { margin-bottom: 10px; }
-  .struk-item { margin-bottom: 8px; }
-  .total { font-weight: bold; font-size: 1.2em; margin-top: 15px; }
+  #struk {
+    width: 320px;
+    font-family: monospace;
+    white-space: pre;
+    border: 1px solid #000;
+    padding: 10px;
+    margin-top: 20px;
+  }
+  button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    font-weight: bold;
+  }
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    #struk, #struk * {
+      visibility: visible;
+    }
+    #struk {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
 </style>
 </head>
 <body>
 
-<h1>Daftar Menu</h1>
-<div id="menu" class="menu-container"></div>
+<h2>Keranjang Belanja</h2>
 
-<div id="struk" class="struk">
-  <h2>Struk Pesanan</h2>
-  <div id="struk-items">Keranjang belanja kosong.</div>
-</div>
+<div id="cart-items"></div>
+
+<div id="struk"></div>
+
+<button onclick="printStruk()">Cetak Struk</button>
 
 <script>
-const menuItems = [
-  { name: "Spaghetti", price: 30000, image: "https://images.unsplash.com/photo-1506919638378-07c16afcd6f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" },
-  { name: "Mie Ayam", price: 15000, image: "https://cove-blog-id.sgp1.cdn.digitaloceanspaces.com/cove-blog-id/2024/07/mie-ayam-bandung.jpg" },
-  { name: "Dimsum", price: 20000, image: "https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/p2/255/2024/11/14/IMG_4814-81774369.jpeg" },
-];
+  // Contoh data keranjang (bisa kamu ganti dengan data dinamis)
+  const cart = [
+    {name: 'Es Buah', qty: 1, price: 15000},
+    {name: 'Dimsum', qty: 1, price: 20000},
+  ];
 
-const cart = {};
+  const bayar = 50000;  // contoh pembayaran
 
-function createMenuCard(item) {
-  const card = document.createElement("div");
-  card.className = "card";
-
-  card.innerHTML = `
-    <img src="${item.image}" alt="${item.name}">
-    <h3>${item.name}</h3>
-    <p>Harga: Rp ${item.price.toLocaleString()}</p>
-    <button onclick="addToCart('${item.name}', ${item.price})">Tambah</button>
-  `;
-  return card;
-}
-
-function populateMenu() {
-  const menuContainer = document.getElementById("menu");
-  menuContainer.innerHTML = "";
-  menuItems.forEach(item => {
-    menuContainer.appendChild(createMenuCard(item));
-  });
-}
-
-function addToCart(name, price) {
-  if (cart[name]) {
-    cart[name].qty++;
-  } else {
-    cart[name] = { price: price, qty: 1 };
-  }
-  updateStruk();
-}
-
-function updateStruk() {
-  const strukItemsDiv = document.getElementById("struk-items");
-  const items = Object.entries(cart);
-  if (items.length === 0) {
-    strukItemsDiv.innerHTML = "Keranjang belanja kosong.";
-    return;
+  function formatRupiah(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
-  let html = "";
-  let total = 0;
-  items.forEach(([name, data], index) => {
-    const subtotal = data.price * data.qty;
-    total += subtotal;
-    html += `<div class="struk-item">
-      ${index + 1}. ${name} - Rp ${data.price.toLocaleString()} x ${data.qty} = Rp ${subtotal.toLocaleString()}
-    </div>`;
-  });
+  function renderCart() {
+    const container = document.getElementById('cart-items');
+    if (cart.length === 0) {
+      container.textContent = 'Keranjang kosong.';
+      document.getElementById('struk').textContent = '';
+      return;
+    }
+    let html = '';
+    cart.forEach(item => {
+      html += `${item.name} - Qty: ${item.qty}, Harga: Rp ${formatRupiah(item.price)}\n`;
+    });
+    container.textContent = html;
+  }
 
-  html += `<div class="total">TOTAL: Rp ${total.toLocaleString()}</div>`;
-  strukItemsDiv.innerHTML = html;
-}
+  function renderStruk() {
+    const strukEl = document.getElementById('struk');
 
-document.addEventListener("DOMContentLoaded", () => {
-  populateMenu();
-});
+    if (cart.length === 0) {
+      strukEl.textContent = '';
+      return;
+    }
+
+    let tanggal = new Date().toLocaleDateString('id-ID');
+    let kasir = 'Dea';
+
+    let header = `VB's Marketplace\n------------------------------\n`;
+    header += `Tanggal : ${tanggal}\n`;
+    header += `Kasir   : ${kasir}\n------------------------------\n`;
+    header += `Item      Qty  Harga   Total\n`;
+
+    let total = 0;
+    let lines = '';
+    cart.forEach(item => {
+      const subtotal = item.price * item.qty;
+      total += subtotal;
+
+      // Format untuk rata kiri dan kanan (monospace)
+      // Contoh: "Es Buah    1  15.000   15.000"
+      let name = item.name.padEnd(10, ' ');
+      let qty = String(item.qty).padEnd(3, ' ');
+      let harga = formatRupiah(item.price).padStart(6, ' ');
+      let subtotalStr = formatRupiah(subtotal).padStart(7, ' ');
+
+      lines += `${name}${qty}${harga}  ${subtotalStr}\n`;
+    });
+
+    let footer = `------------------------------\n`;
+    footer += `Total               Rp${formatRupiah(total)}\n`;
+    footer += `Bayar               Rp${formatRupiah(bayar)}\n`;
+    footer += `Kembali             Rp${formatRupiah(bayar - total)}\n`;
+    footer += `------------------------------\n`;
+    footer += `Terima kasih!`;
+
+    strukEl.textContent = header + lines + footer;
+  }
+
+  function printStruk() {
+    window.print();
+  }
+
+  // Initial render
+  renderCart();
+  renderStruk();
 </script>
 
 </body>
 </html>
-
