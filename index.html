@@ -438,17 +438,24 @@ function checkout() {
   let totalBayar = 0;
 
   for (let i = 0; i < rows.length; i++) {
-    const nama = rows[i].cells[0].innerText;
-    const harga = parseInt(rows[i].cells[1].innerText.replace(/[^\d]/g, ""));
-    const jumlah = parseInt(rows[i].cells[2].innerText);
+    const nama = rows[i].cells[0].innerText.trim();
+
+    // Ambil harga, hapus non-digit, parse jadi int
+    const hargaStr = rows[i].cells[1].innerText.replace(/[^\d]/g, "");
+    const harga = parseInt(hargaStr) || 0;
+
+    // Ambil jumlah, parse int
+    const jumlahStr = rows[i].cells[2].innerText.trim();
+    const jumlah = parseInt(jumlahStr) || 0;
+
     const total = harga * jumlah;
 
-    struk += `${nama} x${jumlah} = Rp ${total.toLocaleString()}\n`;
+    struk += `${nama} x${jumlah} = Rp ${total.toLocaleString("id-ID")}\n`;
     totalBayar += total;
   }
 
   struk += "----------------------------\n";
-  struk += `Total Bayar: Rp ${totalBayar.toLocaleString()}\n`;
+  struk += `Total Bayar: Rp ${totalBayar.toLocaleString("id-ID")}\n`;
   struk += "Terima kasih!\n";
 
   document.getElementById("outputStruk").textContent = struk;
@@ -456,6 +463,7 @@ function checkout() {
   // Tampilkan tombol download
   document.getElementById("btn-download").style.display = "inline-block";
 }
+
 
 function downloadStruk() {
   const isiStruk = document.getElementById("outputStruk").textContent;
