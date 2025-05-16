@@ -33,3 +33,35 @@ function clearCart() {
     alert("Pembayaran berhasil. Terima kasih!");
   }
 }
+
+function printReceipt() {
+  const originalContent = document.body.innerHTML;
+  const receiptContent = document.getElementById("receipt").innerHTML;
+
+  const printWindow = window.open("", "", "width=600,height=600");
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Struk Pembayaran</title>
+        <style>
+          body { font-family: sans-serif; padding: 20px; }
+          table { width: 100%; border-collapse: collapse; }
+          td, th { border: 1px solid #ccc; padding: 8px; }
+        </style>
+      </head>
+      <body>
+        <h2>Struk Pembayaran</h2>
+        ${receiptContent}
+        <br><br>
+        <p>Terima kasih telah berbelanja di VB's Marketplace!</p>
+        <script>
+          window.onload = function() {
+            window.print();
+            window.onafterprint = function() { window.close(); }
+          };
+        <\/script>
+      </body>
+    </html>
+  `);
+  printWindow.document.close();
+}
