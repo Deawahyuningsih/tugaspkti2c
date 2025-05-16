@@ -424,7 +424,7 @@
   </body>
 </html>
 
-
+<script>
 function checkout() {
   const cartTable = document.getElementById("cart-table").getElementsByTagName("tbody")[0];
   const rows = cartTable.getElementsByTagName("tr");
@@ -460,11 +460,12 @@ function checkout() {
 
   document.getElementById("outputStruk").textContent = struk;
 
+
+  document.getElementById("outputStruk").textContent = struk;
+
   // Tampilkan tombol download
   document.getElementById("btn-download").style.display = "inline-block";
 }
-
-
 function downloadStruk() {
   const isiStruk = document.getElementById("outputStruk").textContent;
   const blob = new Blob([isiStruk], { type: "text/plain" });
