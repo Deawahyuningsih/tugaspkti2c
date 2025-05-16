@@ -460,12 +460,11 @@ function checkout() {
 
   document.getElementById("outputStruk").textContent = struk;
 
-
-  document.getElementById("outputStruk").textContent = struk;
-
   // Tampilkan tombol download
   document.getElementById("btn-download").style.display = "inline-block";
 }
+
+
 function downloadStruk() {
   const isiStruk = document.getElementById("outputStruk").textContent;
   const blob = new Blob([isiStruk], { type: "text/plain" });
@@ -487,5 +486,3 @@ function downloadStruk() {
 <button class="btn btn-success" onclick="checkout()">
   <i class="fa fa-shopping-bag"></i> Checkout
 </button>
-
-
