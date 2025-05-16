@@ -421,3 +421,49 @@
   </button>
 </div>
 
+<!-- HTML: Tombol untuk cetak dan bayar -->
+<div class="mt-3 d-flex justify-content-between">
+  <button class="btn btn-secondary" onclick="printReceipt()">
+    <i class="fa fa-print me-1"></i> Cetak Struk
+  </button>
+  <button class="btn btn-danger" onclick="clearCart()">
+    <i class="fa fa-trash me-1"></i> Bayar & Hapus
+  </button>
+</div>
+
+// Fungsi untuk menghapus item dari cart
+function removeItem(index) {
+  cart.splice(index, 1);
+  updateReceipt();
+}
+
+// Fungsi untuk mencetak struk
+function printReceipt() {
+  const originalContent = document.body.innerHTML;
+  const receiptContent = document.getElementById("receipt").innerHTML;
+  
+  document.body.innerHTML = `
+    <div style="padding: 20px; font-family: sans-serif">
+      <h2>Struk Pembayaran</h2>
+      ${receiptContent}
+    </div>`;
+    
+  window.print();
+  document.body.innerHTML = originalContent;
+  location.reload(); // reload untuk kembalikan UI
+}
+
+// Fungsi untuk menghapus semua item (simulasi bayar)
+function clearCart() {
+  if (cart.length === 0) {
+    alert("Keranjang kosong!");
+    return;
+  }
+
+  if (confirm("Yakin ingin membayar dan menghapus semua item?")) {
+    cart = [];
+    updateReceipt();
+    alert("Pembayaran berhasil. Terima kasih!");
+  }
+}
+
