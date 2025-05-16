@@ -1,53 +1,35 @@
-const dataMenu = {
-  menu1: {
-    kasir: 'Dea',
-    waktu: '2025-05-07 14:32',
-    items: [
-      { nama: 'Es Buah', qty: 1, subtotal: '15.000' }
-    ],
-    total: '15.000'
-  },
-  menu2: {
-    kasir: 'Dea',
-    waktu: '2025-05-07 14:33',
-    items: [
-      { nama: 'mie ayam', qty: 1, subtotal: '15.000' },
-      { nama: 'juds sroberi', qty: 1, subtotal: '14.000' }
-    ],
-    total: '29.000'
-  }
-};
-
-function generateReceipt(transaksi) {
-  let struk = 
-`=========================
-VB's
-Bukti Transaksi Kasir
-=========================
-Kasir : ${transaksi.kasir}
-Waktu : ${transaksi.waktu}
--------------------------
-Barang         Qty  Subtotal`;
-
-  transaksi.items.forEach(item => {
-    struk += \n${item.nama.padEnd(15)} ${item.qty}   ${item.subtotal};
-  });
-
-  struk += `\n-------------------------
-Total: ${transaksi.total}
-=========================`;
-
-  return struk;
+// Fungsi untuk menghapus item dari cart
+function removeItem(index) {
+  cart.splice(index, 1);
+  updateReceipt();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const selector = document.getElementById('menuSelector');
-  selector.addEventListener('change', () => {
-    const transaksi = dataMenu[selector.value];
-    const hasilStruk = generateReceipt(transaksi);
-    document.getElementById('tampilanStruk').textContent = hasilStruk;
-  });
+// Fungsi untuk mencetak struk
+function printReceipt() {
+  const originalContent = document.body.innerHTML;
+  const receiptContent = document.getElementById("receipt").innerHTML;
+  
+  document.body.innerHTML = `
+    <div style="padding: 20px; font-family: sans-serif">
+      <h2>Struk Pembayaran</h2>
+      ${receiptContent}
+    </div>`;
+    
+  window.print();
+  document.body.innerHTML = originalContent;
+  location.reload();
+}
 
-  // tampilkan pertama kali
-  selector.dispatchEvent(new Event('change'));
-});
+// Fungsi untuk menghapus semua item (simulasi bayar)
+function clearCart() {
+  if (cart.length === 0) {
+    alert("Keranjang kosong!");
+    return;
+  }
+
+  if (confirm("Yakin ingin membayar dan menghapus semua item?")) {
+    cart = [];
+    updateReceipt();
+    alert("Pembayaran berhasil. Terima kasih!");
+  }
+}
