@@ -493,32 +493,4 @@ function printReceipt() {
         </style>
       </head>
       <body>
-        <h2>Struk Pembayaran</h2>
-        ${receiptContent}
-        <p>Terima kasih telah berbelanja di VB's Marketplace!</p>
-        <script>
-          window.onload = function() {
-            window.print();
-            window.onafterprint = function() { window.close(); }
-          };
-        <\/script>
-      </body>
-    </html>
-  `);
-  printWindow.document.close();
-}
-
-// Fungsi untuk menghapus semua item (simulasi bayar)
-function clearCart() {
-  if (cart.length === 0) {
-    alert("Keranjang kosong!");
-    return;
-  }
-
-  if (confirm("Yakin ingin membayar dan menghapus semua item?")) {
-    cart = [];
-    updateReceipt();
-    alert("Pembayaran berhasil. Terima kasih!");
-  }
-}
-
+      
