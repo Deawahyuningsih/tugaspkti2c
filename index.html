@@ -412,3 +412,71 @@
   </body>
 </html>
 
+<!-- Tambahkan di bagian <script> paling bawah halaman -->
+<script>
+  const cart = []; // Simulasi data keranjang
+
+  // Tambahkan fungsi ini untuk update otomatis struk
+  function updateReceipt() {
+    const tbody = document.querySelector("#cart-table tbody");
+    const outputStruk = document.getElementById("outputStruk");
+    tbody.innerHTML = "";
+
+    let totalHarga = 0;
+    let strukHTML = `<table><tr><th>Menu</th><th>Harga</th><th>Jumlah</th><th>Total</th></tr>`;
+
+    cart.forEach((item, index) => {
+      const total = item.harga * item.jumlah;
+      totalHarga += total;
+      tbody.innerHTML += `
+        <tr>
+          <td>${item.nama}</td>
+          <td>Rp ${item.harga}</td>
+          <td>${item.jumlah}</td>
+          <td>Rp ${total}</td>
+          <td><button class="btn btn-sm btn-danger" onclick="removeItem(${index})">Hapus</button></td>
+        </tr>`;
+
+      strukHTML += `<tr><td>${item.nama}</td><td>Rp ${item.harga}</td><td>${item.jumlah}</td><td>Rp ${total}</td></tr>`;
+    });
+
+    strukHTML += `</table><p><strong>Total: Rp ${totalHarga}</strong></p>`;
+    outputStruk.innerHTML = strukHTML;
+
+    // Update tampilan cart
+    document.getElementById("cart-count").innerText = cart.length;
+    document.getElementById("total-harga").innerText = `Total: Rp ${totalHarga}`;
+    document.getElementById("empty-cart").classList.toggle("d-none", cart.length > 0);
+    document.getElementById("cart-content").classList.toggle("d-none", cart.length === 0);
+  }
+
+  function removeItem(index) {
+    cart.splice(index, 1);
+    updateReceipt();
+  }
+
+  function clearCart() {
+    cart.length = 0;
+    updateReceipt();
+    alert("Pembayaran berhasil. Terima kasih telah berbelanja!");
+  }
+
+  function checkout() {
+    alert("Silakan periksa dan cetak struk Anda.");
+  }
+
+  // Simulasi tambah item
+  // Panggil fungsi ini ketika user menambahkan item dari produk/menu
+  function tambahItemKeCart(nama, harga) {
+    const existing = cart.find(item => item.nama === nama);
+    if (existing) {
+      existing.jumlah++;
+    } else {
+      cart.push({ nama, harga, jumlah: 1 });
+    }
+    updateReceipt();
+  }
+
+  // Contoh pemanggilan (kamu bisa sambungkan ke tombol produk)
+  // tambahItemKeCart("Burger", 20000);
+</script>
