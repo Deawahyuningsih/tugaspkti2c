@@ -425,166 +425,38 @@
 </html>
 
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <title>Marketplace & Struk Belanja</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <style>
-    #cart-table th, #cart-table td {
-      vertical-align: middle;
-    }
-  </style>
-</head>
-<body class="p-4">
+function checkout() {
+  const cartTable = document.getElementById("cart-table").getElementsByTagName("tbody")[0];
+  const rows = cartTable.getElementsByTagName("tr");
 
-  <h1>Daftar Menu</h1>
-  <div id="menu-items" class="row g-3 mb-5"></div>
+  if (rows.length === 0) {
+    alert("Keranjang kosong!");
+    return;
+  }
 
-  <h2>Keranjang Belanja</h2>
-  <table id="cart-table" class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Nama Barang</th>
-        <th>Harga Satuan</th>
-        <th>Jumlah</th>
-        <th>Aksi</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Isi keranjang akan diisi secara dinamis -->
-    </tbody>
-  </table>
+  let struk = "====== STRUK BELANJA ======\n";
+  let totalBayar = 0;
 
-  <button class="btn btn-success mb-3" onclick="checkout()">
-    <i class="fa fa-shopping-bag"></i> Checkout
-  </button>
+  for (let i = 0; i < rows.length; i++) {
+    const nama = rows[i].cells[0].innerText.trim();
 
-  <pre id="outputStruk" style="background:#f4f4f4; padding:10px; margin-top:20px;"></pre>
+    // Ambil harga, hapus non-digit, parse jadi int
+    const hargaStr = rows[i].cells[1].innerText.replace(/[^\d]/g, "");
+    const harga = parseInt(hargaStr) || 0;
 
-  <button class="btn btn-secondary mb-3" onclick="downloadStruk()" id="btn-download" style="display: none;">
-    <i class="fa fa-download"></i> Download Struk
-  </button>
+    // Ambil jumlah, parse int
+    const jumlahStr = rows[i].cells[2].innerText.trim();
+    const jumlah = parseInt(jumlahStr) || 0;
 
-  <script>
-    // Data menu contoh
-    const menuItems = [
-      { name: "Spaghetti", price: 30000 },
-      { name: "Mie Ayam", price: 15000 },
-      { name: "Dimsum", price: 20000 },
-      { name: "Chicken Burger", price: 20000 },
-      { name: "French Fries", price: 20000 },
-      { name: "Jus Stoberi", price: 14000 },
-      { name: "Es Buah", price: 15000 },
-      { name: "Caffe Latte", price: 25000 },
-    ];
+    const total = harga * jumlah;
 
-    const cart = [];
+    struk += ${nama} x${jumlah} = Rp ${total.toLocaleString("id-ID")}\n;
+    totalBayar += total;
+  }
 
-    function renderMenu() {
-      const container = document.getElementById("menu-items");
-      container.innerHTML = "";
-      menuItems.forEach(item => {
-        const div = document.createElement("div");
-        div.className = "col-12 col-sm-6 col-md-4 col-lg-3";
-
-        div.innerHTML = `
-          <div class="card p-3">
-            <h5>${item.name}</h5>
-            <p class="text-danger">Rp ${item.price.toLocaleString("id-ID")}</p>
-            <button class="btn btn-primary btn-sm" onclick="addToCart('${item.name}', ${item.price})">Tambah ke Keranjang</button>
-          </div>
-        `;
-        container.appendChild(div);
-      });
-    }
-
-    function addToCart(name, price) {
-      const item = cart.find(i => i.name === name);
-      if (item) {
-        item.quantity++;
-      } else {
-        cart.push({ name, price, quantity: 1 });
-      }
-      renderCart();
-    }
-
-    function renderCart() {
-      const tbody = document.querySelector("#cart-table tbody");
-      tbody.innerHTML = "";
-      cart.forEach((item, idx) => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${item.name}</td>
-          <td>Rp ${item.price.toLocaleString("id-ID")}</td>
-          <td>${item.quantity}</td>
-          <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${idx})">Hapus</button></td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      renderCart();
-    }
-
-    function checkout() {
-      const cartTable = document.getElementById("cart-table").getElementsByTagName("tbody")[0];
-      const rows = cartTable.getElementsByTagName("tr");
-
-      if (rows.length === 0) {
-        alert("Keranjang kosong!");
-        return;
-      }
-
-      let struk = "====== STRUK BELANJA ======\n";
-      let totalBayar = 0;
-
-      for (let i = 0; i < rows.length; i++) {
-        const nama = rows[i].cells[0].innerText.trim();
-
-        const hargaStr = rows[i].cells[1].innerText.replace(/[^\d]/g, "");
-        const harga = parseInt(hargaStr) || 0;
-
-        const jumlahStr = rows[i].cells[2].innerText.trim();
-        const jumlah = parseInt(jumlahStr) || 0;
-
-        const total = harga * jumlah;
-
-        struk += `${nama} x${jumlah} = Rp ${total.toLocaleString("id-ID")}\n`;
-        totalBayar += total;
-      }
-
-      struk += "----------------------------\n";
-      struk += `Total Bayar: Rp ${totalBayar.toLocaleString("id-ID")}\n`;
-      struk += "Terima kasih!\n";
-
-      document.getElementById("outputStruk").textContent = struk;
-      document.getElementById("btn-download").style.display = "inline-block";
-    }
-
-    function downloadStruk() {
-      const isiStruk = document.getElementById("outputStruk").textContent;
-      const blob = new Blob([isiStruk], { type: "text/plain" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "struk_belanja.txt";
-      link.click();
-      URL.revokeObjectURL(url);
-    }
-
-    // Render menu saat halaman siap
-    document.addEventListener("DOMContentLoaded", () => {
-      renderMenu();
-      renderCart();
-    });
-  </script>
-</body>
-</html>
-
+  struk += "----------------------------\n";
+  struk += Total Bayar: Rp ${totalBayar.toLocaleString("id-ID")}\n;
+  struk += "Terima kasih!\n";
 
   document.getElementById("outputStruk").textContent = struk;
 
