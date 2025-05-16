@@ -424,6 +424,42 @@
   </body>
 </html>
 
+function checkout() {
+  const cartTable = document.getElementById("cart-table").getElementsByTagName("tbody")[0];
+  const rows = cartTable.getElementsByTagName("tr");
+
+  if (rows.length === 0) {
+    alert("Keranjang kosong!");
+    return;
+  }
+
+  let struk = "====== STRUK BELANJA ======\n";
+  let totalBayar = 0;
+
+  for (let i = 0; i < rows.length; i++) {
+    const nama = rows[i].cells[0].innerText.trim();
+    const hargaStr = rows[i].cells[1].innerText.replace(/[^\d]/g, "");
+    const harga = parseInt(hargaStr) || 0;
+    const jumlahStr = rows[i].cells[2].innerText.trim();
+    const jumlah = parseInt(jumlahStr) || 0;
+
+    const total = harga * jumlah;
+
+    struk += `${nama} x${jumlah} = Rp ${total.toLocaleString("id-ID")}\n`; // ✅ perbaikan
+    totalBayar += total;
+  }
+
+  struk += "----------------------------\n";
+  struk += `Total Bayar: Rp ${totalBayar.toLocaleString("id-ID")}\n`; // ✅ perbaikan
+  struk += "Terima kasih!\n";
+
+  document.getElementById("outputStruk").textContent = struk;
+
+  // Tampilkan tombol download
+  document.getElementById("btn-download").style.display = "inline-block";
+}
+
+
 <script>
 function checkout() {
   const cartTable = document.getElementById("cart-table").getElementsByTagName("tbody")[0];
