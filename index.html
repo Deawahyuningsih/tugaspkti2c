@@ -437,11 +437,41 @@ function removeItem(index) {
   updateReceipt();
 }
 
-// Fungsi untuk mencetak struk
-function printReceipt() {
-  const originalContent = document.body.innerHTML;
-  const receiptContent = document.getElementById("receipt").innerHTML;
-  
+<script>
+  function printReceipt() {
+    const receiptContent = document.getElementById("receipt").innerHTML;
+
+    const printWindow = window.open("", "", "width=600,height=600");
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Struk Pembayaran</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+          </style>
+        </head>
+        <body>
+          <h2>Struk Pembayaran</h2>
+          ${receiptContent}
+          <p>Terima kasih telah berbelanja di VB's Marketplace!</p>
+          <script>
+            window.onload = function() {
+              window.print();
+              window.onafterprint = function() { window.close(); }
+            };
+          <\/script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  }
+</script>
+</body>
+</html>
+
+
   document.body.innerHTML = `
     <div style="padding: 20px; font-family: sans-serif">
       <h2>Struk Pembayaran</h2>
