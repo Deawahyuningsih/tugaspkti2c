@@ -424,6 +424,106 @@
   </body>
 </html>
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Marketplace Demo</title>
+  <style>
+    table, th, td { border: 1px solid #ccc; border-collapse: collapse; padding: 8px; }
+  </style>
+</head>
+<body>
+
+<h2>Menu</h2>
+<button onclick="addToCart('Chicken Burger', 20.000)">Tambah Burger (Rp 25.000)</button>
+<button onclick="addToCart('French Fries', 20.000)">Tambah Fries (Rp 15.000)</button>
+
+<h2>Keranjang Belanja</h2>
+<table id="cart-table">
+  <thead>
+    <tr>
+      <th>Menu</th>
+      <th>Harga</th>
+      <th>Jumlah</th>
+      <th>Total</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Isi keranjang akan muncul di sini -->
+  </tbody>
+</table>
+
+<button onclick="checkout()">Checkout</button>
+
+<h3>Struk</h3>
+<pre id="outputStruk" style="background:#f4f4f4; padding:10px;"></pre>
+
+<script>
+  const cart = [];
+
+  function addToCart(name, price) {
+    // Cek apakah menu sudah ada di keranjang
+    const item = cart.find(i => i.name === name);
+    if (item) {
+      item.qty++;
+    } else {
+      cart.push({ name: name, price: price, qty: 1 });
+    }
+    renderCart();
+  }
+
+  function renderCart() {
+    const tbody = document.querySelector("#cart-table tbody");
+    tbody.innerHTML = "";
+    cart.forEach((item, idx) => {
+      const total = item.price * item.qty;
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${item.name}</td>
+        <td>Rp ${item.price.toLocaleString("id-ID")}</td>
+        <td>${item.qty}</td>
+        <td>Rp ${total.toLocaleString("id-ID")}</td>
+        <td><button onclick="removeFromCart(${idx})">Hapus</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    renderCart();
+  }
+
+  function checkout() {
+    if (cart.length === 0) {
+      alert("Keranjang kosong!");
+      return;
+    }
+
+    let struk = "====== STRUK BELANJA ======\n";
+    let totalBayar = 0;
+
+    cart.forEach(item => {
+      const total = item.price * item.qty;
+      struk += `${item.name} x${item.qty} = Rp ${total.toLocaleString("id-ID")}\n`;
+      totalBayar += total;
+    });
+
+    struk += "----------------------------\n";
+    struk += `Total Bayar: Rp ${totalBayar.toLocaleString("id-ID")}\n`;
+    struk += "Terima kasih!\n";
+
+    document.getElementById("outputStruk").textContent = struk;
+  }
+</script>
+
+</body>
+</html>
+
+
+
 <script>
 function checkout() {
   const cartTable = document.getElementById("cart-table").getElementsByTagName("tbody")[0];
