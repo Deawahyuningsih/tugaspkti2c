@@ -447,10 +447,35 @@ function printReceipt() {
       <h2>Struk Pembayaran</h2>
       ${receiptContent}
     </div>`;
-    
-  window.print();
-  document.body.innerHTML = originalContent;
-  location.reload(); // reload untuk kembalikan UI
+
+function printReceipt() {
+  const receiptContent = document.getElementById("receipt").innerHTML;
+
+  const printWindow = window.open("", "", "width=600,height=600");
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Struk Pembayaran</title>
+        <style>
+          body { font-family: Arial, sans-serif; padding: 20px; }
+          table { width: 100%; border-collapse: collapse; }
+          th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        </style>
+      </head>
+      <body>
+        <h2>Struk Pembayaran</h2>
+        ${receiptContent}
+        <p>Terima kasih telah berbelanja di VB's Marketplace!</p>
+        <script>
+          window.onload = function() {
+            window.print();
+            window.onafterprint = function() { window.close(); }
+          };
+        <\/script>
+      </body>
+    </html>
+  `);
+  printWindow.document.close();
 }
 
 // Fungsi untuk menghapus semua item (simulasi bayar)
