@@ -174,3 +174,41 @@ document.addEventListener("DOMContentLoaded", function () {
   renderCart();
 });
 
+function checkout() {
+  const cartItems = getCartItems(); // kamu bisa sesuaikan ini kalau nama fungsimu beda
+  if (cartItems.length === 0) {
+    alert("Keranjang kosong.");
+    return;
+  }
+
+  let totalHarga = 0;
+  let struk = "===== STRUK PEMBELIAN =====\n";
+
+  cartItems.forEach((item, index) => {
+    const subtotal = item.harga * item.jumlah;
+    totalHarga += subtotal;
+    struk += `${index + 1}. ${item.nama} x${item.jumlah} - Rp ${subtotal}\n`;
+  });
+
+  struk += `\nTotal: Rp ${totalHarga}`;
+  struk += `\nTerima kasih telah berbelanja di VB's Marketplace!\n===========================`;
+
+  document.getElementById("outputStruk").textContent = struk;
+  document.getElementById("btn-download").style.display = "inline-block";
+
+  clearCart(); // kosongkan keranjang setelah checkout, opsional
+}
+
+function downloadStruk() {
+  const struk = document.getElementById("outputStruk").textContent;
+  const blob = new Blob([struk], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "struk.txt";
+  link.click();
+
+  URL.revokeObjectURL(url); // bersihkan URL blob
+}
+
