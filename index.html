@@ -424,6 +424,20 @@
   </body>
 </html>
 
+<!-- Tempat menampilkan struk -->
+<pre id="outputStruk" style="background:#f4f4f4; padding:10px; margin-top:20px;"></pre>
+
+<!-- Tombol download -->
+<button class="btn btn-secondary mb-3" onclick="downloadStruk()" id="btn-download" style="display: none;">
+  <i class="fa fa-download"></i> Download Struk
+</button>
+
+<!-- Tombol checkout -->
+<button class="btn btn-success" onclick="checkout()">
+  <i class="fa fa-shopping-bag"></i> Checkout
+</button>
+
+<script>
 function checkout() {
   const cartTable = document.getElementById("cart-table").getElementsByTagName("tbody")[0];
   const rows = cartTable.getElementsByTagName("tr");
@@ -442,22 +456,35 @@ function checkout() {
     const harga = parseInt(hargaStr) || 0;
     const jumlahStr = rows[i].cells[2].innerText.trim();
     const jumlah = parseInt(jumlahStr) || 0;
-
     const total = harga * jumlah;
 
-    struk += `${nama} x${jumlah} = Rp ${total.toLocaleString("id-ID")}\n`; // ✅ perbaikan
+    struk += `${nama} x${jumlah} = Rp ${total.toLocaleString("id-ID")}\n`;
     totalBayar += total;
   }
 
   struk += "----------------------------\n";
-  struk += `Total Bayar: Rp ${totalBayar.toLocaleString("id-ID")}\n`; // ✅ perbaikan
+  struk += `Total Bayar: Rp ${totalBayar.toLocaleString("id-ID")}\n`;
   struk += "Terima kasih!\n";
 
+  // Tampilkan struk di layar
   document.getElementById("outputStruk").textContent = struk;
 
   // Tampilkan tombol download
   document.getElementById("btn-download").style.display = "inline-block";
 }
+
+function downloadStruk() {
+  const isiStruk = document.getElementById("outputStruk").textContent;
+  const blob = new Blob([isiStruk], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "struk_belanja.txt";
+  link.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+
 
 
 <script>
