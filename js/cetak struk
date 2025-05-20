@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Cetak Struk</title>
+  <meta charset="UTF-8" />
+  <title>Cetak Struk Dinamis</title>
   <style>
-    #struk {
-      width: 300px;
+    body {
+      background-color: white;
+      color: black;
       font-family: monospace;
+      padding: 20px;
+    }
+
+    #struk {
+      width: 320px;
       white-space: pre;
       border: 1px solid #000;
       padding: 10px;
+      margin-top: 20px;
     }
+
+    select, button {
+      font-size: 16px;
+      margin-top: 10px;
+      padding: 5px 10px;
+    }
+
     @media print {
       body * {
         visibility: hidden;
@@ -28,85 +42,103 @@
 </head>
 <body>
 
-<div id="struk">
-PT. Contoh Jaya
-------------------------------
-Tanggal : 07/05/2025
-Kasir   : dea
-------------------------------
-Item      Qty   Harga     Total
-Es Buah    1   15.000   15.000
-Dimsum     1   20.000   20.000
-------------------------------
-Total               Rp35000
-Bayar               Rp50.000
-Kembali             Rp15.000
-------------------------------
-Terima kasih!
-</div>
+  <h2>Pilih Transaksi</h2>
+  <select id="menuSelector"></select>
 
-<button onclick="window.print()">Cetak Struk</button>
+  <div id="struk"></div>
+
+  <button onclick="window.print()">Cetak Struk</button>
+
+  <script>
+    const dataMenu = {
+      menu1: {
+        kasir: 'Dea',
+        waktu: '2025-05-07 14:32',
+        items: [
+          { nama: 'Es Buah', qty: 1, harga: 15000 },
+          { nama: 'Dimsum', qty: 1, harga: 20000 }
+        ]
+      },
+      menu2: {
+        kasir: 'Dea',
+        waktu: '2025-05-07 14:35',
+        items: [
+          { nama: 'Nasi Goreng', qty: 1, harga: 20000 },
+          { nama: 'Es Teh', qty: 1, harga: 5000 }
+        ]
+      },
+      menu3: {
+        kasir: 'Lala',
+        waktu: '2025-05-08 10:20',
+        items: [
+          { nama: 'Mie Ayam', qty: 2, harga: 12000 },
+          { nama: 'Teh Manis', qty: 1, harga: 4000 }
+        ]
+      },
+      menu4: {
+        kasir: 'Adit',
+        waktu: '2025-05-08 11:00',
+        items: [
+          { nama: 'Kopi', qty: 1, harga: 8000 },
+          { nama: 'Roti Bakar', qty: 1, harga: 10000 }
+        ]
+      }
+    };
+
+    function formatRupiah(angka) {
+      return 'Rp' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function generateReceipt(transaksi) {
+      let total = 0;
+      let struk = "";
+      struk += "PT. Contoh Jaya\n";
+      struk += "------------------------------\n";
+      struk += `Kasir   : ${transaksi.kasir}\n`;
+      struk += `Waktu   : ${transaksi.waktu}\n`;
+      struk += "------------------------------\n";
+      struk += "Item           Qty   Harga    Total\n";
+
+      transaksi.items.forEach(item => {
+        const subtotal = item.qty * item.harga;
+        total += subtotal;
+        struk += `${item.nama.padEnd(15)} ${item.qty.toString().padEnd(5)} ${formatRupiah(item.harga).padEnd(9)} ${formatRupiah(subtotal)}\n`;
+      });
+
+      struk += "------------------------------\n";
+      struk += `Total                ${formatRupiah(total)}\n`;
+      struk += `Bayar                ${formatRupiah(total + 15000)}\n`;
+      struk += `Kembali              ${formatRupiah(15000)}\n`;
+      struk += "------------------------------\n";
+      struk += "Terima kasih!\n";
+
+      return struk;
+    }
+
+    function populateMenu() {
+      const selector = document.getElementById("menuSelector");
+      selector.innerHTML = ""; // kosongkan dulu
+      for (const key in dataMenu) {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = key.replace("menu", "Transaksi ");
+        selector.appendChild(option);
+      }
+    }
+
+    function updateReceipt() {
+      const selector = document.getElementById("menuSelector");
+      const transaksi = dataMenu[selector.value];
+      const hasilStruk = generateReceipt(transaksi);
+      document.getElementById("struk").textContent = hasilStruk;
+    }
+
+    window.onload = function () {
+      populateMenu();
+      document.getElementById("menuSelector").addEventListener("change", updateReceipt);
+      updateReceipt();
+    };
+  </script>
 
 </body>
 </html>
-
-const dataMenu = {
-  menu1: {
-    kasir: 'Dea',
-    waktu: '2025-05-07 14:32',
-    items: [
-      { nama: 'Es Buah', qty: 1, subtotal: '15.000' }
-    ],
-    total: '15.000'
-  },
-  menu2: {
-    kasir: 'Dea',
-    waktu: '2025-05-07 14:35',
-    items: [
-      { nama: 'Nasi Goreng', qty: 1, subtotal: '20.000' },
-      { nama: 'Es Teh', qty: 1, subtotal: '5.000' }
-    ],
-    total: '25.000'
-  }
-};
-
-function generateReceipt(transaksi) {
-  let struk = 
-`=========================
-VB's
-Bukti Transaksi Kasir
-=========================
-Kasir : ${transaksi.kasir}
-Waktu : ${transaksi.waktu}
--------------------------
-Barang         Qty  Subtotal`;
-
-  transaksi.items.forEach(item => {
-    struk += \n${item.nama.padEnd(15)} ${item.qty}   ${item.subtotal};
-  });
-
-  struk += `\n-------------------------
-Total: ${transaksi.total}
-=========================`;
-
-  return struk;
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const selector = document.getElementById('menuSelector');
-  const output = document.getElementById('tampilanStruk');
-
-  if (!selector || !output) {
-    console.error('Elemen tidak ditemukan.');
-    return;
-  }
-
-  function updateReceipt() {
-    const transaksi = dataMenu[selector.value];
-    const hasilStruk = generateReceipt(transaksi);
-    output.textContent = hasilStruk;
-  }
-
-  selector.addEventListener('change', updateReceipt);
-  updateReceipt(); // Tampilkan default saat pertama kali
-});
