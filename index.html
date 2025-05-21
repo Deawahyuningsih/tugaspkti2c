@@ -1,487 +1,179 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VB's Marketplace</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css" rel="stylesheet" />
+</head>
+<body style="padding: 100px 20px;">
 
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
-      crossorigin="anonymous"
-    />
+  <div class="container">
+    <h2 class="mb-4">Produk</h2>
+    <div class="row" id="product-list">
+      <!-- Produk akan diisi oleh JavaScript -->
+    </div>
 
-    <!-- FA CSS -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css"
-      rel="stylesheet"
-    />
+    <hr class="my-5" />
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="img/favicon.png" type="image/png" />
+    <h2>Keranjang Belanja <span id="cart-count" class="badge bg-danger">0</span></h2>
+    <div id="empty-cart" class="mt-3 text-center"><p class="lead">Keranjang masih kosong.</p></div>
 
-    <!-- font-awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css" />
-
-    <!-- WOW CSS -->
-    <link rel="stylesheet" href="css/animate.css" />
-
-    <!-- Title of Page -->
-    <title>VB's Marketplace</title>
-  </head>
-
-  <body>
-    <!-- Navbar -->
-    <nav
-      class="navbar navbar-expand-md navbar-light fixed-top"
-      style="
-        background-color: rgba(255, 255, 255, 0.9) !important;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        padding: 10px 0;
-      "
-    >
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <img
-            src="img/logo.png"
-            width="180"
-            alt="Logo"
-            style="max-height: 45px; width: auto"
-          />
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div
-          class="collapse navbar-collapse justify-content-end"
-          id="navbarNav"
-        >
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#">HOME</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#about">ABOUT</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#products">PRODUCTS</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#menu">MENU</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#cart">CART</a>
-            </li>
-          </ul>
-        </div>
+    <div id="cart-content" class="d-none">
+      <div class="table-responsive">
+        <table class="table table-bordered mt-3" id="cart-table">
+          <thead class="table-light">
+            <tr>
+              <th>Menu</th>
+              <th>Harga</th>
+              <th>Jumlah</th>
+              <th>Total</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
-    </nav>
 
-    <section
-      id="about"
-      style="
-        padding: 120px 20px;
-        background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);
-      "
-    >
-      <div style="max-width: 1200px; margin: 0 auto">
-        <h2
-          style="
-            text-align: center;
-            font-size: 42px;
-            margin-bottom: 20px;
-            color: #333;
-            font-weight: 600;
-          "
-        >
-          Meet Our Team
-        </h2>
-        <p
-          style="
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 50px;
-            color: #666;
-            font-size: 18px;
-          "
-        >
-          The creative minds behind our success, bringing passion and expertise
-          to everything we do.
-        </p>
-
-        <div
-          style="
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-          "
-        >
-          <!-- Team members -->
-          <script src="js/about.js"></script>
-        </div>
-      </div>
-    </section>
-
-    <!-- Products -->
-    <div class="container" id="products" style="margin-top: 8%">
-      <h2 style="font-size: 2.5rem !important">PRODUCTS</h2>
-      <div class="row">
-        <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInLeft">
-          <div class="card card-product">
-            <img
-              class="card-img-top"
-              src="https://i.gojekapi.com/darkroom/gofood-indonesia/v2/images/uploads/3a6c8584-4fca-45ee-a68e-e33fa8d8f0d4_Go-Biz_20210916_212919.jpeg"
-              alt="food product"
-            />
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInRight">
-          <div class="card card-product">
-            <img
-              class="card-img-top"
-              src="https://kirbiecravings.com/wp-content/uploads/2019/09/easy-french-fries-1.jpg"
-              alt="food product"
-            />
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInLeft">
-          <div class="card card-product">
-            <img
-              class="card-img-top"
-              src="https://www.sasa.co.id/medias/page_medias/Screen_Shot_2021-10-05_at_12_49_34.png"
-              alt="food product"
-            />
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInRight">
-          <div class="card card-product">
-            <img
-              class="card-img-top"
-              src="https://i.gojekapi.com/darkroom/gofood-indonesia/v2/images/uploads/c33f7b3c-d40e-4992-b4e9-61872221ae9b_Go-Biz_20241207_110718.jpeg"
-              alt="food product"
-            />
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInLeft">
-          <div class="card card-product">
-            <img
-              class="card-img-top"
-              src="https://radarmukomuko.bacakoran.co/upload/50cabe3212d7608e3ef4867336b45833.jpg"
-              alt="food product"
-            />
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInRight">
-          <div class="card card-product">
-            <img
-              class="card-img-top"
-              src="https://asset.kompas.com/crops/eWh25QLGaUd83ZfRO6yvdxwygKg=/0x22:968x667/1200x800/data/photo/2023/06/02/64793cbdad978.jpg"
-              alt="food product"
-            />
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-8 col-md-5 col-lg-4 wow fadeInLeft">
-          <div class="card card-product">
-            <img
-              class="card-img-top"
-              src="https://shottbeverages.com/wp-content/uploads/2019/05/Peppermint-Matcha-Latte.jpg"
-              alt="food product"
-            />
-          </div>
-        </div>
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <button class="btn btn-danger" onclick="clearCart()"><i class="fa fa-trash"></i> Kosongkan</button>
+        <h4 id="total-harga">Total: Rp 0</h4>
+        <button class="btn btn-success" onclick="checkout()"><i class="fa fa-shopping-bag"></i> Checkout</button>
       </div>
     </div>
 
-    <!-- Menu -->
-    <div id="menu" class="container" id="blog" style="margin-top: 8%">
-      <h2 style="font-size: 2.5rem !important">Menu Favorit Kami</h2>
-      <div class="row mb-4">
-        <div class="col-12">
-          <ul
-            class="nav nav-pills mb-3 justify-content-center"
-            id="menu-tabs"
-            role="tablist"
-          >
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link active"
-                id="all-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#all"
-                type="button"
-                role="tab"
-                aria-controls="all"
-                aria-selected="true"
-              >
-                Semua
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link"
-                id="makanan-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#makanan"
-                type="button"
-                role="tab"
-                aria-controls="makanan"
-                aria-selected="false"
-              >
-                Makanan
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link"
-                id="minuman-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#minuman"
-                type="button"
-                role="tab"
-                aria-controls="minuman"
-                aria-selected="false"
-              >
-                Minuman
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <pre id="outputStruk" style="background:#f4f4f4; padding:10px; margin-top:20px; color:black;"></pre>
+    <button class="btn btn-secondary mb-3" onclick="downloadStruk()" id="btn-download" style="display: none;">
+      <i class="fa fa-download"></i> Download Struk
+    </button>
+  </div>
 
-      <div class="tab-content" id="menuTabContent">
-        <!-- All Tab -->
-        <div
-          class="tab-pane fade show active"
-          id="semua"
-          role="tabpanel"
-          aria-labelledby="semua-tab"
-        >
-          <div class="row" id="all-items"></div>
-        </div>
+  <script>
+    const produk = [
+      { nama: "Burger", harga: 25000 },
+      { nama: "Kentang Goreng", harga: 15000 },
+      { nama: "Ayam Geprek", harga: 28000 },
+      { nama: "Es Teh Manis", harga: 8000 },
+      { nama: "Es Kopi Susu", harga: 18000 },
+      { nama: "Sate Ayam", harga: 30000 },
+      { nama: "Nasi Goreng", harga: 22000 },
+    ];
 
-        <!-- Makanan Tab -->
-        <div
-          class="tab-pane fade"
-          id="makanan"
-          role="tabpanel"
-          aria-labelledby="makanan-tab"
-        >
-          <div class="row" id="food-items"></div>
-        </div>
+    const cart = [];
 
-        <!-- Minuman Tab -->
-        <div
-          class="tab-pane fade"
-          id="minuman"
-          role="tabpanel"
-          aria-labelledby="minuman-tab"
-        >
-          <div class="row" id="drink-items"></div>
-        </div>
-      </div>
-
-      <div class="mt-5 pt-4 border-top" id="cart">
-        <h3>
-          Keranjang Belanja
-          <span id="cart-count" class="badge bg-danger">0</span>
-        </h3>
-
-        <div id="empty-cart" class="mt-3 text-center">
-          <p class="lead">Keranjang belanja Anda kosong.</p>
-        </div>
-
-        <div id="cart-content" class="d-none">
-          <div class="table-responsive">
-            <table class="table table-bordered mt-3" id="cart-table">
-              <thead class="table-light">
-                <tr>
-                  <th>Menu</th>
-                  <th>Harga</th>
-                  <th>Jumlah</th>
-                  <th>Total</th>
-                  <th>Aksi</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-
-          <div class="row mt-3">
-            <div class="col-md-6">
-              <button class="btn btn-danger" onclick="clearCart()">
-                <i class="fa fa-trash"></i> Kosongkan Keranjang
-              </button>
-            </div>
-<div class="col-md-6 text-end">
-              <h4 id="total-harga" class="mb-3">Total: Rp 0</h4>
-              <button class="btn btn-success" onclick="checkout()">
-                <i class="fa fa-shopping-bag"></i> Checkout
-                <pre id="outputStruk" 
-                style="background:#f4f4f4; padding:10px; margin-top:20px;"></pre
-              </button>
+    function renderProduk() {
+      const list = document.getElementById("product-list");
+      produk.forEach((item, index) => {
+        const col = document.createElement("div");
+        col.className = "col-md-4 mb-4";
+        col.innerHTML = `
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <h5 class="card-title">${item.nama}</h5>
+              <p class="card-text">Rp ${item.harga.toLocaleString("id-ID")}</p>
+              <button class="btn btn-primary" onclick="tambahKeCart(${index})">Tambah</button>
             </div>
           </div>
-        </div>
+        `;
+        list.appendChild(col);
+      });
+    }
 
-            
-  <!-- Tombol Download Struk -->
-  <button class="btn btn-secondary mb-3" onclick="downloadStruk()" id="btn-download" style="display: none;">
-    <i class="fa fa-download"></i> Download Struk
-  </button>
+    function tambahKeCart(index) {
+      const item = produk[index];
+      const existing = cart.find(p => p.nama === item.nama);
+      if (existing) {
+        existing.jumlah++;
+      } else {
+        cart.push({ ...item, jumlah: 1 });
+      }
+      renderCart();
+    }
 
-  <!-- Tempat menampilkan struk -->
-  <pre id="outputStruk" style="background:#f4f4f4; padding:10px;"></pre>
-</div>
+    function renderCart() {
+      const tbody = document.querySelector("#cart-table tbody");
+      const empty = document.getElementById("empty-cart");
+      const content = document.getElementById("cart-content");
+      const count = document.getElementById("cart-count");
+      const totalEl = document.getElementById("total-harga");
 
-            
-      </div>
-    </div>
+      tbody.innerHTML = "";
+      let total = 0;
+      cart.forEach((item, i) => {
+        const row = document.createElement("tr");
+        const subTotal = item.harga * item.jumlah;
+        total += subTotal;
+        row.innerHTML = `
+          <td>${item.nama}</td>
+          <td>Rp ${item.harga.toLocaleString("id-ID")}</td>
+          <td>${item.jumlah}</td>
+          <td>Rp ${subTotal.toLocaleString("id-ID")}</td>
+          <td><button class="btn btn-sm btn-danger" onclick="hapusItem(${i})">Hapus</button></td>
+        `;
+        tbody.appendChild(row);
+      });
 
-    <!-- Footer -->
-    <footer class="bg-dark text-light py-4 mt-5">
-      <div class="container">
-        <div class="row align-items-center">
-          <!-- Logo Section -->
-          <div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
-            <img src="img/favicon.png" alt="Logo" style="width: 65px" />
-          </div>
+      count.textContent = cart.length;
+      totalEl.textContent = `Total: Rp ${total.toLocaleString("id-ID")}`;
 
-          <!-- Center Text / Navigation -->
-          <div class="col-md-4 text-center mb-3 mb-md-0">
-            <p class="mb-0">&copy; Tugas PKTI 2C</p>
-          </div>
+      if (cart.length > 0) {
+        empty.classList.add("d-none");
+        content.classList.remove("d-none");
+      } else {
+        empty.classList.remove("d-none");
+        content.classList.add("d-none");
+      }
+    }
 
-          <!-- Social Media / Contact -->
-          <div class="col-md-4 text-center text-md-end">
-            <a href="#" class="text-light me-3 text-decoration-none">Privacy</a>
-            <a href="#" class="text-light me-3 text-decoration-none">Terms</a>
-            <a href="#" class="text-light text-decoration-none">Contact</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+    function hapusItem(index) {
+      cart.splice(index, 1);
+      renderCart();
+    }
 
-    <!-- Scroll to top arrow -->
-    <a href="javascript:" id="return-to-top"
-      ><i class="fa fa-angle-up" aria-hidden="true" style="font-size: 30px"></i
-    ></a>
+    function clearCart() {
+      cart.length = 0;
+      renderCart();
+      document.getElementById("outputStruk").textContent = "";
+      document.getElementById("btn-download").style.display = "none";
+    }
 
-    <!-- JQuery JS -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
-      integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
-      crossorigin="anonymous"
-    ></script>
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Keranjang kosong!");
+        return;
+      }
 
-    <!-- Bootstrap JS -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
-      integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
-      integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
-      crossorigin="anonymous"
-    ></script>
+      let struk = "====== STRUK BELANJA ======\n";
+      let totalBayar = 0;
+      cart.forEach(item => {
+        const subTotal = item.harga * item.jumlah;
+        struk += `${item.nama} x${item.jumlah} = Rp ${subTotal.toLocaleString("id-ID")}\n`;
+        totalBayar += subTotal;
+      });
+      struk += "----------------------------\n";
+      struk += `Total Bayar: Rp ${totalBayar.toLocaleString("id-ID")}\n`;
+      struk += "Terima kasih!\n";
 
-    <!-- Custom scripts -->
-    <script type="text/javascript" src="js/script.js"></script>
+      const output = document.getElementById("outputStruk");
+      output.textContent = struk;
+      output.style.color = "black";
+      document.getElementById("btn-download").style.display = "inline-block";
+    }
 
-    <!-- WOW animations -->
-    <script type="text/javascript" src="js/wow.min.js"></script>
+    function downloadStruk() {
+      const isiStruk = document.getElementById("outputStruk").textContent;
+      const blob = new Blob([isiStruk], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "struk_belanja.txt";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
 
-    <script type="text/javascript" src="js/menu.js"></script>
-    <script type="text/javascript" src="js/cart.js"></script>
-
-    <script type="text/javascript">
-      new WOW().init();
-    </script>
-  </body>
+    // Jalankan di awal
+    renderProduk();
+  </script>
+</body>
 </html>
-
-<!-- Tempat menampilkan struk -->
-<pre id="outputStruk" style="background:#f4f4f4; padding:10px; margin-top:20px;"></pre>
-
-<!-- Tombol download -->
-<button class="btn btn-secondary mb-3" onclick="downloadStruk()" id="btn-download" style="display: none;">
-  <i class="fa fa-download"></i> Download Struk
-</button>
-
-<!-- Tombol checkout -->
-<button class="btn btn-success" onclick="checkout()">
-  <i class="fa fa-shopping-bag"></i> Checkout
-</button>
-
-<script>
-function checkout() {
-  const cartTable = document.getElementById("cart-table").getElementsByTagName("tbody")[0];
-  const rows = cartTable.getElementsByTagName("tr");
-
-  if (rows.length === 0) {
-    alert("Keranjang kosong!");
-    return;
-  }
-
-  let struk = "====== STRUK BELANJA ======\n";
-  let totalBayar = 0;
-
-  for (let i = 0; i < rows.length; i++) {
-    const nama = rows[i].cells[0].innerText.trim();
-    const hargaStr = rows[i].cells[1].innerText.replace(/[^\d]/g, "");
-    const harga = parseInt(hargaStr) || 0;
-    const jumlahStr = rows[i].cells[2].innerText.trim();
-    const jumlah = parseInt(jumlahStr) || 0;
-    const total = harga * jumlah;
-
-    struk += `${nama} x${jumlah} = Rp ${total.toLocaleString("id-ID")}\n`;
-    totalBayar += total;
-  }
-
-  struk += "----------------------------\n";
-  struk += `Total Bayar: Rp ${totalBayar.toLocaleString("id-ID")}\n`;
-  struk += "Terima kasih!\n";
-
-  // Tampilkan struk di layar
-  document.getElementById("outputStruk").textContent = struk;
-
-  // Tampilkan tombol download
-  document.getElementById("btn-download").style.display = "inline-block";
-}
-
-function downloadStruk() {
-  const isiStruk = document.getElementById("outputStruk").textContent;
-  const blob = new Blob([isiStruk], { type: "text/plain" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "struk_belanja.txt";
-  link.click();
-  URL.revokeObjectURL(url);
-}
-</script>
-
